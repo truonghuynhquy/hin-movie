@@ -26,7 +26,7 @@ Route::get('/', function () {
 
 Route::get('/admin', function () {
     return Inertia::render('Admin/Index');
-});
+})->name('admin.index');
 
 Route::middleware([
     'auth:sanctum',
