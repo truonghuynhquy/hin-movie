@@ -12,4 +12,9 @@ class TagController extends Controller
     {
         return Inertia::render('Tags/Index');
     }
+
+    function create()
+    {
+        return Inertia::render('Tags/Create');
+    }
 }
