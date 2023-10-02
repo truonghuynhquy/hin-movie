@@ -13,7 +13,9 @@ class TagController extends Controller
 {
     function index()
     {
-        return Inertia::render('Tags/Index');
+        return Inertia::render('Tags/Index', [
+            'tags' => Tag::paginate(5)
+        ]);
     }
 
     function create()
@@ -28,6 +30,6 @@ class TagController extends Controller
             'slug' => Str::slug(Request::input('tagName'))
         ]);
 
-        return Redirect::route('admin.tags.index');
+        return Redirect::route('admin.tags.index')->with('flash.banner', 'Tag created successfully.');
     }
 }

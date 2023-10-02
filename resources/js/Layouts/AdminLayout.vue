@@ -253,8 +253,10 @@ const logout = () => {
                 </header>
 
                 <!-- Page Content -->
-                <main>
-                    <slot />
+                <main
+                    class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200"
+                >
+                    <slot></slot>
                 </main>
             </div>
         </div>
