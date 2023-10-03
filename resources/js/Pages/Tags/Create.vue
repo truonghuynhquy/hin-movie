@@ -5,24 +5,16 @@
                 Tags Create
             </h2>
         </template>
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="w-full flex mb-4 p-2">
-                <Link
-                    :href="route('admin.tags.index')"
-                    class="px-4 py-2 bg-green-600 hover:bg-green-800 text-white rounded-lg"
-                >
-                    Tag Index
-                </Link>
-            </div>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-20">
             <section class="flex content-center">
                 <form @submit.prevent="storeTag">
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <div class="w-full space-y-3">
-                                <div class="">
+                                <div>
                                     <label
                                         for="first-name"
-                                        class="block text-sm font-medium text-gray-700"
+                                        class="block text-base font-medium text-gray-700 pb-5"
                                         >Tag name</label
                                     >
                                     <input
@@ -32,13 +24,21 @@
                                         class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                                     />
                                 </div>
-                                <div>
+                                <div class="pt-6 flex justify-center">
                                     <button
                                         type="submit"
                                         class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 text-white rounded"
                                     >
                                         Create
                                     </button>
+                                    <div class="ml-5 pt-2">
+                                        <Link
+                                            :href="route('admin.tags.index')"
+                                            class="px-4 py-2 bg-green-600 hover:bg-green-800 text-white rounded-lg"
+                                        >
+                                            Back Tags
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>
