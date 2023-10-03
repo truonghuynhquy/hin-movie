@@ -13,11 +13,17 @@ class TagController extends Controller
 {
     function index()
     {
+        $perPage = Request::input('perPage') ?: 5;
         return Inertia::render('Tags/Index', [
             'tags' => Tag::query()
                 ->when(Request::input('search'), fn ($query, $search) => $query->where('tag_name', 'LIKE', '%' . $search . '%'))
-                ->paginate(5)
-                ->appends(['search' => Request::input('search')])
+                ->paginate($perPage)
+                ->appends([
+                    'search' => Request::input('search'),
+                    'perPage' => Request::input('perPage')
+                ]),
+
+            'filters' => Request::only(['search', 'perPage'])
         ]);
     }
 

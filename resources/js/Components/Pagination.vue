@@ -1,5 +1,5 @@
 <template lang="">
-    <div class="flex">
+    <div class="flex justify-center">
         <template v-for="(link, key) in links" :key="key">
             <div
                 v-if="link.url === null"

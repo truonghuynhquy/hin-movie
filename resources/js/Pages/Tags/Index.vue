@@ -50,7 +50,8 @@
                                 </div>
                                 <div class="flex">
                                     <select
-                                        wire:model="perPage"
+                                        v-model="perPage"
+                                        @change="getTags"
                                         class="pl-4 pr-7 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
                                     >
                                         <option value="5">5 Per Page</option>
@@ -124,14 +125,27 @@ import { router } from "@inertiajs/vue3";
 
 const props = defineProps({
     tags: Object,
+    filters: Object,
 });
 
-const search = ref("");
-const perPage = ref(5);
+const search = ref(props.filters.search);
+const perPage = ref(props.filters.perPage);
 
 watch(search, (value) => {
-    router.get("/admin/tags", { search: value });
+    router.get(
+        "/admin/tags",
+        { search: value, perPage: perPage.value },
+        { preserveState: true, replace: true }
+    );
 });
+
+function getTags() {
+    router.get(
+        "/admin/tags",
+        { perPage: perPage.value, search: search.value },
+        { preserveState: true, replace: true }
+    );
+}
 </script>
 
 <style lang=""></style>
