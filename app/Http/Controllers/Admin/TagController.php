@@ -14,7 +14,10 @@ class TagController extends Controller
     function index()
     {
         return Inertia::render('Tags/Index', [
-            'tags' => Tag::paginate(5)
+            'tags' => Tag::query()
+                ->when(Request::input('search'), fn ($query, $search) => $query->where('tag_name', 'LIKE', '%' . $search . '%'))
+                ->paginate(5)
+                ->appends(['search' => Request::input('search')])
         ]);
     }
 

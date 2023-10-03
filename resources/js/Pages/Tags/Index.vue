@@ -41,7 +41,7 @@
                                         </div>
 
                                         <input
-                                            wire:model="search"
+                                            v-model="search"
                                             type="text"
                                             placeholder="Search by title"
                                             class="px-8 py-3 w-full md:w-2/6 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
@@ -65,7 +65,7 @@
                             <table class="w-full">
                                 <thead>
                                     <tr
-                                        class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600"
+                                        class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b"
                                     >
                                         <th class="px-4 py-3">Name</th>
                                         <th class="px-4 py-3">Slug</th>
@@ -119,9 +119,18 @@
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Link } from "@inertiajs/vue3";
 import Pagination from "@/Components/Pagination.vue";
+import { ref, watch, defineProps } from "vue";
+import { router } from "@inertiajs/vue3";
 
 const props = defineProps({
     tags: Object,
+});
+
+const search = ref("");
+const perPage = ref(5);
+
+watch(search, (value) => {
+    router.get("/admin/tags", { search: value });
 });
 </script>
 
