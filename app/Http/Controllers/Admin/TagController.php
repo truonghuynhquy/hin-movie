@@ -57,4 +57,10 @@ class TagController extends Controller
         ]);
         return Redirect::route('admin.tags.index')->with('flash.banner', 'Tag updated successfully.');
     }
+
+    function destroy(Tag $tag)
+    {
+        $tag->delete();
+        return Redirect::route('admin.tags.index')->with('flash.banner', 'Tag deleted successfully.')->with('flash.bannerStyle', 'danger');
+    }
 }

@@ -105,11 +105,20 @@
                                             >
                                                 Edit
                                             </Link>
-                                            <button
+                                            <Link
+                                                :href="
+                                                    route(
+                                                        'admin.tags.destroy',
+                                                        tag.id
+                                                    )
+                                                "
+                                                method="delete"
+                                                as="button"
+                                                type="button"
                                                 class="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
                                             >
                                                 Delete
-                                            </button>
+                                            </Link>
                                         </td>
                                     </tr>
                                 </tbody>
