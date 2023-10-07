@@ -94,11 +94,17 @@
                                         <td
                                             class="flex justify-around px-4 py-3 text-sm border"
                                         >
-                                            <button
+                                            <Link
+                                                :href="
+                                                    route(
+                                                        'admin.tags.edit',
+                                                        tag.id
+                                                    )
+                                                "
                                                 class="bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
                                             >
                                                 Edit
-                                            </button>
+                                            </Link>
                                             <button
                                                 class="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
                                             >
