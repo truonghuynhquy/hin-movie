@@ -24,7 +24,7 @@ class CastController extends Controller
     {
         $cast = Cast::where('tmdb_id', Request::input('castTMDBId'))->first();
         if ($cast) {
-            return Redirect::back()->with('error', 'Cast already exists');
+            return Redirect::back()->with('flash.banner', 'Cast already exists.')->with('flash.bannerStyle', 'danger');
         }
 
         $tmdb_cast = Http::asJson()->get(config('services.tmdb.endpoint') . 'person/' . Request::input('castTMDBId') . '?api_key=' . config('services.tmdb.secret') . '&language=en-US');
