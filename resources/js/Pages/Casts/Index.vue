@@ -10,12 +10,35 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <section class="container mx-auto p-6 font-mono">
                     <div class="w-full flex mb-4 p-2 justify-end">
-                        <Link
-                            :href="route('admin.casts.create')"
-                            class="px-4 py-2 bg-green-600 hover:bg-green-800 text-white rounded-lg"
+                        <form
+                            class="flex space-x-4 shadow bg-white rounded-md m-2 p-2"
                         >
-                            Create Tag
-                        </Link>
+                            <div class="p-1 flex items-center">
+                                <label
+                                    for="tmdb_id_g"
+                                    class="block text-sm font-medium text-gray-700 mr-4"
+                                    >Cast Tmdb Id</label
+                                >
+                                <div class="relative rounded-md shadow-sm">
+                                    <input
+                                        v-model="castTMDBId"
+                                        id="tmdb_id_g"
+                                        name="tmdb_id_g"
+                                        class="px-3 py-2 border border-gray-300 rounded"
+                                        placeholder="Cast ID"
+                                    />
+                                </div>
+                            </div>
+                            <div class="p-1">
+                                <button
+                                    type="button"
+                                    @click="generateCast"
+                                    class="inline-flex items-center justify-center py-2 px-4 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-green-700 transition duration-150 ease-in-out disabled:opacity-50"
+                                >
+                                    <span>Generate</span>
+                                </button>
+                            </div>
+                        </form>
                     </div>
 
                     <div
@@ -84,7 +107,7 @@
                                         class="text-gray-700"
                                     >
                                         <td class="px-4 py-3 border">
-                                            {{ cast.tag_name }}
+                                            {{ cast.name }}
                                         </td>
                                         <td
                                             class="px-4 py-3 text-ms font-semibold border"
@@ -154,6 +177,7 @@ const props = defineProps({
 
 const search = ref(props.filters.search);
 const perPage = ref(props.filters.perPage);
+const castTMDBId = ref("");
 
 watch(search, (value) => {
     router.get(
@@ -169,6 +193,10 @@ function getCasts() {
         { perPage: perPage.value, search: search.value },
         { preserveState: true, replace: true }
     );
+}
+
+function generateCast() {
+    router.post("/admin/casts", { castTMDBId: castTMDBId.value });
 }
 </script>
 
