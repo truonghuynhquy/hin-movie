@@ -53,7 +53,7 @@ class CastController extends Controller
                 'slug'    => Str::slug($tmdb_cast['name']),
                 'poster_path' => $tmdb_cast['profile_path']
             ]);
-            return Redirect::back()->with('flash.banner', 'Cast created.');
+            return Redirect::back()->with('flash.banner', 'Cast Created Successfully.');
         } else {
             return Redirect::back()->with('flash.banner', 'Api error.')->with('flash.bannerStyle', 'danger');
         }
@@ -66,6 +66,12 @@ class CastController extends Controller
             'poster_path' => 'required'
         ]);
         $cast->update($validated);
-        return Redirect::route('admin.casts.index')->with('flash.banner', 'Cast Updated.');
+        return Redirect::route('admin.casts.index')->with('flash.banner', 'Cast Updated Successfully.');
+    }
+
+    function destroy(Cast $cast)
+    {
+        $cast->delete();
+        return Redirect::back()->with('flash.banner', 'Cast Deleted Successfully.');
     }
 }
