@@ -30,6 +30,13 @@ class CastController extends Controller
         ]);
     }
 
+    function edit(Cast $cast)
+    {
+        return Inertia::render('Casts/Edit', [
+            'cast' => $cast
+        ]);
+    }
+
     function store()
     {
         $cast = Cast::where('tmdb_id', Request::input('castTMDBId'))->first();
