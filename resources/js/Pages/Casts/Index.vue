@@ -196,7 +196,13 @@ function getCasts() {
 }
 
 function generateCast() {
-    router.post("/admin/casts", { castTMDBId: castTMDBId.value });
+    router.post(
+        "/admin/casts",
+        { castTMDBId: castTMDBId.value },
+        {
+            onFinish: (visit) => (castTMDBId.value = ""),
+        }
+    );
 }
 </script>
 

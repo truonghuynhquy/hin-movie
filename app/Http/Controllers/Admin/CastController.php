@@ -14,9 +14,19 @@ class CastController extends Controller
 {
     function index()
     {
+        $perPage = Request::input('perPage') ?: 5;
+
         return Inertia::render('Casts/Index', [
-            'casts' => Cast::paginate(5),
-            'filters' => Request::only(['search', 'perPage']),
+            'casts' => Cast::query()
+                ->when(Request::input('search'), function ($query, $search) {
+                    $query->where('name', 'like', "%{$search}%");
+                })
+                ->paginate($perPage)
+                ->appends([
+                    'search' => Request::input('search'),
+                    'perPage' => Request::input('perPage')
+                ]),
+            'filters' => Request::only(['search', 'perPage'])
         ]);
     }
 
