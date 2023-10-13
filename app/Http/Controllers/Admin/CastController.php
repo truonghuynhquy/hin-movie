@@ -38,7 +38,7 @@ class CastController extends Controller
             ]);
             return Redirect::back()->with('flash.banner', 'Cast created.');
         } else {
-            return Redirect::back()->with('flash.banner', 'Api error.');
+            return Redirect::back()->with('flash.banner', 'Api error.')->with('flash.bannerStyle', 'danger');
         }
     }
 }
