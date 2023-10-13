@@ -7,7 +7,7 @@
         </template>
 
         <div class="py-2">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
                 <section class="container mx-auto p-6 font-mono">
                     <div class="w-full flex mb-4 p-2">
                         <Link
@@ -19,9 +19,52 @@
                     </div>
 
                     <div
-                        class="w-full mb-8 overflow-hidden bg-white rounded-lg shadow-lg"
+                        class="w-full mb-8 p-6 sm:max-w-md overflow-hidden bg-white rounded-lg shadow-lg"
                     >
-                        Form
+                        <form @submit.prevent="submitCast">
+                            <div>
+                                <InputLabel for="name" value="Name" />
+                                <TextInput
+                                    id="name"
+                                    v-model="form.name"
+                                    type="text"
+                                    class="mt-1 block w-full"
+                                    required
+                                    autofocus
+                                    autocomplete="name"
+                                />
+                                <InputError
+                                    class="mt-2"
+                                    :message="form.errors.name"
+                                />
+                            </div>
+
+                            <div class="mt-4">
+                                <InputLabel for="poster_path" value="Poster" />
+                                <TextInput
+                                    id="poster_path"
+                                    v-model="form.poster_path"
+                                    type="text"
+                                    class="mt-1 block w-full"
+                                />
+                                <div
+                                    class="text-sm text-red-400"
+                                    v-if="form.errors.poster_path"
+                                >
+                                    {{ form.errors.poster_path }}
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-end mt-4">
+                                <PrimaryButton
+                                    class="ml-4"
+                                    :class="{ 'opacity-25': form.processing }"
+                                    :disabled="form.processing"
+                                >
+                                    Update
+                                </PrimaryButton>
+                            </div>
+                        </form>
                     </div>
                 </section>
             </div>
@@ -31,13 +74,26 @@
 
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
-import { Link } from "@inertiajs/vue3";
-import Pagination from "@/Components/Pagination.vue";
+import { Link, useForm } from "@inertiajs/vue3";
 import { ref, watch, defineProps } from "vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+
+import TextInput from "@/Components/TextInput.vue";
 
 const props = defineProps({
     cast: Object,
 });
+
+const form = useForm({
+    name: props.cast.name,
+    poster_path: props.cast.poster_path,
+});
+
+function submitCast() {
+    form.put("/admin/casts/" + props.cast.id);
+}
 </script>
 
 <style lang=""></style>

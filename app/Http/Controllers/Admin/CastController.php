@@ -58,4 +58,14 @@ class CastController extends Controller
             return Redirect::back()->with('flash.banner', 'Api error.')->with('flash.bannerStyle', 'danger');
         }
     }
+
+    function update(Cast $cast)
+    {
+        $validated = Request::validate([
+            'name' => 'required',
+            'poster_path' => 'required'
+        ]);
+        $cast->update($validated);
+        return Redirect::route('admin.casts.index')->with('flash.banner', 'Cast Updated.');
+    }
 }
