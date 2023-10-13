@@ -29,14 +29,15 @@
                                     v-model="form.name"
                                     type="text"
                                     class="mt-1 block w-full"
-                                    required
                                     autofocus
                                     autocomplete="name"
                                 />
-                                <InputError
-                                    class="mt-2"
-                                    :message="form.errors.name"
-                                />
+                                <div
+                                    class="text-sm text-red-400"
+                                    v-if="form.errors.name"
+                                >
+                                    {{ form.errors.name }}
+                                </div>
                             </div>
 
                             <div class="mt-4">
