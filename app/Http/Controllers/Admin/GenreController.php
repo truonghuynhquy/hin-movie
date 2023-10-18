@@ -34,8 +34,21 @@ class GenreController extends Controller
     {
         $tmdb_genres = Http::asJson()->get(config('services.tmdb.endpoint') . 'genre/movie/list?api_key=' . config('services.tmdb.secret') . '&language=en-US');
         if ($tmdb_genres->successful()) {
-            // $tmdb_genres_json = $tmdb_genres->json();
-            dd($tmdb_genres->json());
+            $tmdb_genres_json = $tmdb_genres->json();
+            foreach ($tmdb_genres_json as $single_tmdb_genre) {
+                foreach ($single_tmdb_genre as $tgenre) {
+                    $genre = Genre::where('tmdb_id', $tgenre['id'])->first();
+                    if (!$genre) {
+                        Genre::create([
+                            'tmdb_id' => $tgenre['id'],
+                            'title' => $tgenre['name'],
+                        ]);
+                    }
+                }
+            }
+            return Redirect::back()->with('flash.banner', 'Genre Created Successfully.');
+        } else {
+            return Redirect::back()->with('flash.banner', 'Api error.')->with('flash.bannerStyle', 'danger');
         }
     }
 }
