@@ -29,4 +29,13 @@ class GenreController extends Controller
             'filters' => Request::only(['search', 'perPage'])
         ]);
     }
+
+    public function store()
+    {
+        $tmdb_genres = Http::asJson()->get(config('services.tmdb.endpoint') . 'genre/movie/list?api_key=' . config('services.tmdb.secret') . '&language=en-US');
+        if ($tmdb_genres->successful()) {
+            // $tmdb_genres_json = $tmdb_genres->json();
+            dd($tmdb_genres->json());
+        }
+    }
 }
