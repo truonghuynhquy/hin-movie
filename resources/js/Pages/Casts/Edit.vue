@@ -9,15 +9,6 @@
         <div class="py-2">
             <div class="max-w-7xl mx-auto">
                 <section class="container mx-auto p-6 font-mono">
-                    <div class="w-full flex mb-4 p-2">
-                        <Link
-                            :href="route('admin.casts.index')"
-                            class="bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
-                        >
-                            Cast Index
-                        </Link>
-                    </div>
-
                     <div
                         class="w-full mb-8 p-6 sm:max-w-md overflow-hidden bg-white rounded-lg shadow-lg"
                     >
@@ -56,14 +47,23 @@
                                 </div>
                             </div>
 
-                            <div class="flex items-center justify-end mt-4">
+                            <div class="flex items-center pt-6 justify-between">
                                 <PrimaryButton
-                                    class="ml-4"
+                                    class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 text-white rounded"
                                     :class="{ 'opacity-25': form.processing }"
                                     :disabled="form.processing"
                                 >
                                     Update
                                 </PrimaryButton>
+
+                                <div class="ml-5 pt-2">
+                                    <Link
+                                        :href="route('admin.casts.index')"
+                                        class="px-4 py-2 bg-green-600 hover:bg-green-800 text-white rounded-lg"
+                                    >
+                                        Back Casts
+                                    </Link>
+                                </div>
                             </div>
                         </form>
                     </div>
