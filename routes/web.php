@@ -22,38 +22,37 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
 
-Route::middleware(['auth:sanctum', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+
+Route::group(['middleware' => 'PreventBackHistory'], function () {
+
     Route::get('/', function () {
-        return Inertia::render('Admin/Index');
-    })->name('index');
-    Route::resource('/movies', MovieController::class);
-    Route::resource('/tv-shows', TvShowController::class);
-    // Route::resource('/tv-shows/{tv-show}/seasons', SeasonController::class);
-    // Route::resource('/tv-shows/{tv-show}/seasons/{season}/episodes', EpisodeController::class);
-    Route::resource('/tv-shows.seasons', SeasonController::class);
+        return Inertia::render('Welcome', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
+        ]);
+    })->middleware(['guest']);
 
-    // Định nghĩa tài nguyên "episodes" lồng trong tài nguyên "seasons"
-    Route::resource('/tv-shows.seasons.episodes', EpisodeController::class);
-    Route::resource('/genres', GenreController::class);
-    Route::resource('/casts', CastController::class);
-    Route::resource('/tags', TagController::class);
-});
+    Route::middleware(['auth:sanctum', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/', function () {
+            return Inertia::render('Admin/Index');
+        })->name('index');
+        Route::resource('/movies', MovieController::class);
+        Route::resource('/tv-shows', TvShowController::class);
+        // Route::resource('/tv-shows/{tv-show}/seasons', SeasonController::class);
+        // Route::resource('/tv-shows/{tv-show}/seasons/{season}/episodes', EpisodeController::class);
+        Route::resource('/tv-shows.seasons', SeasonController::class);
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
+        // Định nghĩa tài nguyên "episodes" lồng trong tài nguyên "seasons"
+        Route::resource('/tv-shows.seasons.episodes', EpisodeController::class);
+        Route::resource('/genres', GenreController::class);
+        Route::resource('/casts', CastController::class);
+        Route::resource('/tags', TagController::class);
+    });
+
+    Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
