@@ -105,7 +105,7 @@
                                     }}</TableData>
                                     <TableData>
                                         <div class="flex justify-around">
-                                            <ButtonLink
+                                            <!-- <ButtonLink
                                                 class="bg-blue-500 hover:bg-blue-700"
                                                 :link="
                                                     route(
@@ -114,7 +114,7 @@
                                                     )
                                                 "
                                                 >Seasons</ButtonLink
-                                            >
+                                            > -->
                                             <ButtonLink
                                                 :link="
                                                     route(

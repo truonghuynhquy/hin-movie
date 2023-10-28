@@ -28,4 +28,24 @@ class TvShowController extends Controller
             'filters' => Request::only(['search', 'perPage'])
         ]);
     }
+
+    public function store()
+    {
+        $tvShow = TvShow::where('tmdb_id', Request::input('tvShowTMDBId'))->first();
+        if ($tvShow) {
+            return Redirect::back()->with('flash.banner', 'Tv Show Exists.');
+        }
+        $tmdb_tv = Http::asJson()->get(config('services.tmdb.endpoint') . 'tv/' . Request::input('tvShowTMDBId') . '?api_key=' . config('services.tmdb.secret') . '&language=en-US');
+        if ($tmdb_tv->successful()) {
+            TvShow::create([
+                'tmdb_id' => $tmdb_tv['id'],
+                'name'    => $tmdb_tv['name'],
+                'poster_path' => $tmdb_tv['poster_path'],
+                'created_year' => $tmdb_tv['first_air_date']
+            ]);
+            return Redirect::back()->with('flash.banner', 'Tv Show Created Successfully.');
+        } else {
+            return Redirect::back()->with('flash.banner', 'Api error.')->with('flash.bannerStyle', 'danger');
+        }
+    }
 }
