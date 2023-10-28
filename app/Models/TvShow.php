@@ -11,11 +11,11 @@ class TvShow extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['tmdb_id', 'name', 'slug', 'poster_path', 'created_year'];
+    protected $fillable = ['tmdb_id', 'name', 'slug', 'created_year', 'poster_path'];
 
     public function setNameAttribute($value)
     {
-        $this->attributes['name'] = Str::slug($value);
+        $this->attributes['name'] = $value;
         $this->attributes['slug'] = Str::slug($value);
     }
 }

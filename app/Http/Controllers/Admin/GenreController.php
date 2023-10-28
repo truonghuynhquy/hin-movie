@@ -69,6 +69,6 @@ class GenreController extends Controller
     function destroy(Genre $genre)
     {
         $genre->delete();
-        return Redirect::route('admin.genres.index')->with('flash.banner', 'Genre deleted successfully.')->with('flash.bannerStyle', 'danger');
+        return Redirect::route('admin.genres.index')->with('flash.banner', 'Genre Deleted Successfully.')->with('flash.bannerStyle', 'danger');
     }
 }

@@ -72,6 +72,6 @@ class CastController extends Controller
     function destroy(Cast $cast)
     {
         $cast->delete();
-        return Redirect::back()->with('flash.banner', 'Cast Deleted Successfully.');
+        return Redirect::back()->with('flash.banner', 'Cast Deleted Successfully.')->with('flash.bannerStyle', 'danger');
     }
 }
