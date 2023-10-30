@@ -58,7 +58,7 @@
 
                                 <div class="ml-5 pt-2">
                                     <Link
-                                        :href="route('admin.genres.index')"
+                                        :href="route('admin.tv-shows.index')"
                                         class="px-4 py-2 bg-green-600 hover:bg-green-800 text-white rounded-lg"
                                     >
                                         Back Tv Shows
