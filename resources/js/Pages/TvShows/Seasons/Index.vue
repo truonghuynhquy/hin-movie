@@ -1,11 +1,6 @@
 <template lang="">
     <AdminLayout title="Dashboard">
-        <template #header>
-            <!-- <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Genres Index
-            </h2> -->
-            Tv Show Index
-        </template>
+        <template #header> Seasons Index </template>
 
         <div class="py-2">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -18,22 +13,22 @@
                                 <label
                                     for="tmdb_id_g"
                                     class="block text-sm font-medium text-gray-700 mr-4"
-                                    >Tv Tmdb Id</label
+                                    >Season Nr</label
                                 >
                                 <div class="relative rounded-md shadow-sm">
                                     <input
-                                        v-model="tvShowTMDBId"
+                                        v-model="seasonNumber"
                                         id="tmdb_id_g"
                                         name="tmdb_id_g"
                                         class="px-3 py-2 border border-gray-300 rounded"
-                                        placeholder="Tv ID"
+                                        placeholder="Season Nr"
                                     />
                                 </div>
                             </div>
                             <div class="p-1">
                                 <button
                                     type="button"
-                                    @click="generateTvShow"
+                                    @click="generateSeason"
                                     class="inline-flex items-center justify-center py-2 px-4 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-green-700 transition duration-150 ease-in-out disabled:opacity-50"
                                 >
                                     <span>Generate</span>
@@ -75,7 +70,7 @@
                                 <div class="flex">
                                     <select
                                         v-model="perPage"
-                                        @change="getTvShows"
+                                        @change="getSeasons"
                                         class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
                                     >
                                         <option value="5">5 Per Page</option>
@@ -91,15 +86,19 @@
                                 <template #tableHead>
                                     <TableHead>Name</TableHead>
                                     <TableHead>Slug</TableHead>
+                                    <TableHead>Season Nr</TableHead>
                                     <TableHead>Poster</TableHead>
                                     <TableHead>Manage</TableHead>
                                 </template>
                                 <TableRow
-                                    v-for="tvShow in tvShows.data"
-                                    :key="tvShow.id"
+                                    v-for="season in seasons.data"
+                                    :key="season.id"
                                 >
-                                    <TableData>{{ tvShow.name }}</TableData>
-                                    <TableData>{{ tvShow.slug }}</TableData>
+                                    <TableData>{{ season.name }}</TableData>
+                                    <TableData>{{ season.slug }}</TableData>
+                                    <TableData>{{
+                                        season.season_number
+                                    }}</TableData>
                                     <TableData>{{
                                         tvShow.poster_path
                                     }}</TableData>
@@ -109,17 +108,17 @@
                                                 class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
                                                 :href="
                                                     route(
-                                                        'admin.seasons.index',
-                                                        tvShow.id
+                                                        'admin.episodes.index',
+                                                        [tvShow.id, season.id]
                                                     )
                                                 "
-                                                >Seasons</Link
+                                                >Episodes</Link
                                             >
                                             <ButtonLink
                                                 :link="
                                                     route(
                                                         'admin.tv-shows.edit',
-                                                        tvShow.id
+                                                        [tvShow.id, season.id]
                                                     )
                                                 "
                                                 >Edit</ButtonLink
@@ -129,7 +128,7 @@
                                                 :link="
                                                     route(
                                                         'admin.tv-shows.destroy',
-                                                        tvShow.id
+                                                        [tvShow.id, season.id]
                                                     )
                                                 "
                                                 method="delete"
@@ -142,7 +141,7 @@
                                 </TableRow>
                             </Table>
                             <div class="m-2 p-2">
-                                <Pagination :links="tvShows.links" />
+                                <Pagination :links="seasons.links" />
                             </div>
                         </div>
                     </div>
@@ -165,16 +164,17 @@ import ButtonLink from "@/Components/ButtonLink.vue";
 
 const props = defineProps({
     tvShows: Object,
+    seasons: Object,
     filters: Object,
 });
 
 const search = ref(props.filters.search);
 const perPage = ref(props.filters.perPage);
-const tvShowTMDBId = ref("");
+const seasonNumber = ref("");
 
 watch(search, (value) => {
     router.get(
-        "/admin/tv-shows",
+        "/admin/tv-shows/${props.tvShow.id}/seasons",
         { search: value, perPage: perPage.value },
         {
             preserveState: true,
@@ -183,9 +183,9 @@ watch(search, (value) => {
     );
 });
 
-function getTvShows() {
+function getSeasons() {
     router.get(
-        "/admin/tv-shows",
+        "/admin/tv-shows/${props.tvShow.id}/seasons",
         { perPage: perPage.value, search: search.value },
         {
             preserveState: true,
@@ -194,12 +194,12 @@ function getTvShows() {
     );
 }
 
-function generateTvShow() {
+function generateSeason() {
     router.post(
-        "/admin/tv-shows",
-        { tvShowTMDBId: tvShowTMDBId.value },
+        "/admin/tv-shows/${props.tvShow.id}/seasons",
+        { seasonNumber: seasonNumber.value },
         {
-            onFinish: () => (tvShowTMDBId.value = ""),
+            onFinish: () => (seasonNumber.value = ""),
         }
     );
 }

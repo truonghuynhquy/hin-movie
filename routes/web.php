@@ -26,7 +26,7 @@ use Inertia\Inertia;
 
 Route::group(['middleware' => 'PreventBackHistory'], function () {
 
-    Route::middleware(['PreventBackHistory', 'auth:sanctum', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::middleware(['auth:sanctum', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
         Route::get('/', function () {
             return Inertia::render('Admin/Index');
         })->name('index');
@@ -39,7 +39,7 @@ Route::group(['middleware' => 'PreventBackHistory'], function () {
         Route::resource('/tags', TagController::class);
     });
 
-    Route::middleware(['PreventBackHistory', 'auth:sanctum', 'verified'])->get('/dashboard', function () {
+    Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
