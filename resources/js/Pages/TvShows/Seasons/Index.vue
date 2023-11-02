@@ -195,14 +195,13 @@ function getSeasons() {
 }
 
 function generateSeason() {
-    // router.post(
-    //     `/admin/tv-shows/${props.tvShow.id}/seasons`,
-    //     { seasonNumber: seasonNumber.value },
-    //     {
-    //         onFinish: () => (seasonNumber.value = ""),
-    //     }
-    // );
-    console.log(props);
+    router.post(
+        `/admin/tv-shows/${props.tvShow.id}/seasons`,
+        { seasonNumber: seasonNumber.value },
+        {
+            onFinish: () => (seasonNumber.value = ""),
+        }
+    );
 }
 </script>
 <style lang=""></style>

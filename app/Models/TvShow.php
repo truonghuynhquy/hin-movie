@@ -19,7 +19,7 @@ class TvShow extends Model
         $this->attributes['slug'] = Str::slug($value);
     }
 
-    public function season()
+    public function seasons()
     {
         return $this->hasMany(Season::class);
     }
