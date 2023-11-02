@@ -31,4 +31,25 @@ class SeasonController extends Controller
             'tvShow' => $tvShow
         ]);
     }
+
+    public function store(TvShow $tvShow)
+    {
+        $season = $tvShow->seasons()->where('season_number', Request::input('seasonNumber'))->exists();
+        if ($season) {
+            return Redirect::back()->with('flash.banner', 'Season Exists.');
+        }
+        $tmdb_season = Http::asJson()->get(config('services.tmdb.endpoint') . 'tv/' . $tvShow->tmdb_id . '/season/' . Request::input('seasonNumber') . '?api_key=' . config('services.tmdb.secret') . '&language=en-US');
+        if ($tmdb_season->successful()) {
+            Season::create([
+                'tv_show_id' => $tvShow->id,
+                'tmdb_id' => $tmdb_season['id'],
+                'name'    => $tmdb_season['name'],
+                'poster_path' => $tmdb_season['poster_path'],
+                'season_number' => $tmdb_season['season_number']
+            ]);
+            return Redirect::back()->with('flash.banner', 'Season Created Successfully.');
+        } else {
+            return Redirect::back()->with('flash.banner', 'Api error.')->with('flash.bannerStyle', 'danger');
+        }
+    }
 }

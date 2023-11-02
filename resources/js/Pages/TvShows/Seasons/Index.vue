@@ -163,7 +163,7 @@ import TableData from "@/Components/TableData.vue";
 import ButtonLink from "@/Components/ButtonLink.vue";
 
 const props = defineProps({
-    tvShows: Object,
+    tvShow: Object,
     seasons: Object,
     filters: Object,
 });
@@ -174,7 +174,7 @@ const seasonNumber = ref("");
 
 watch(search, (value) => {
     router.get(
-        "/admin/tv-shows/${props.tvShow.id}/seasons",
+        `/admin/tv-shows/${props.tvShow.id}/seasons`,
         { search: value, perPage: perPage.value },
         {
             preserveState: true,
@@ -185,7 +185,7 @@ watch(search, (value) => {
 
 function getSeasons() {
     router.get(
-        "/admin/tv-shows/${props.tvShow.id}/seasons",
+        `/admin/tv-shows/${props.tvShow.id}/seasons`,
         { perPage: perPage.value, search: search.value },
         {
             preserveState: true,
@@ -195,13 +195,14 @@ function getSeasons() {
 }
 
 function generateSeason() {
-    router.post(
-        "/admin/tv-shows/${props.tvShow.id}/seasons",
-        { seasonNumber: seasonNumber.value },
-        {
-            onFinish: () => (seasonNumber.value = ""),
-        }
-    );
+    // router.post(
+    //     `/admin/tv-shows/${props.tvShow.id}/seasons`,
+    //     { seasonNumber: seasonNumber.value },
+    //     {
+    //         onFinish: () => (seasonNumber.value = ""),
+    //     }
+    // );
+    console.log(props);
 }
 </script>
 <style lang=""></style>
