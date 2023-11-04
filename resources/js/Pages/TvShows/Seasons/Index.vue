@@ -117,7 +117,7 @@
                                             <ButtonLink
                                                 :link="
                                                     route(
-                                                        'admin.tv-shows.edit',
+                                                        'admin.seasons.edit',
                                                         [tvShow.id, season.id]
                                                     )
                                                 "
@@ -127,7 +127,7 @@
                                                 class="bg-red-500 hover:bg-red-700"
                                                 :link="
                                                     route(
-                                                        'admin.tv-shows.destroy',
+                                                        'admin.seasons.destroy',
                                                         [tvShow.id, season.id]
                                                     )
                                                 "

@@ -52,4 +52,28 @@ class SeasonController extends Controller
             return Redirect::back()->with('flash.banner', 'Api error.')->with('flash.bannerStyle', 'danger');
         }
     }
+
+    public function edit(TvShow $tvShow, Season $season)
+    {
+        return Inertia::render('TvShows/Seasons/Edit', [
+            'tvShow' => $tvShow,
+            'season' => $season
+        ]);
+    }
+
+    public function update(TvShow $tvShow, Season $season)
+    {
+        $validated = Request::validate([
+            'name'    => 'required',
+            'poster_path' => 'required'
+        ]);
+        $season->update($validated);
+        return Redirect::route('admin.seasons.index', $tvShow->id)->with('flash.banner', 'Season Updated Successfully.');
+    }
+
+    public function destroy(TvShow $tvShow, Season $season)
+    {
+        $season->delete();
+        return Redirect::route('admin.seasons.index', $tvShow->id)->with('flash.banner', 'Season Deleted Successfully.')->with('flash.bannerStyle', 'danger');
+    }
 }
