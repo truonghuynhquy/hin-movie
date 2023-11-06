@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\TvShow;
+use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -37,12 +38,16 @@ class TvShowController extends Controller
         }
         $tmdb_tv = Http::asJson()->get(config('services.tmdb.endpoint') . 'tv/' . Request::input('tvShowTMDBId') . '?api_key=' . config('services.tmdb.secret') . '&language=en-US');
         if ($tmdb_tv->successful()) {
-            TvShow::create([
-                'tmdb_id' => $tmdb_tv['id'],
-                'name'    => $tmdb_tv['name'],
-                'poster_path' => $tmdb_tv['poster_path'],
-                'created_year' => $tmdb_tv['first_air_date']
-            ]);
+            try {
+                TvShow::create([
+                    'tmdb_id' => $tmdb_tv['id'],
+                    'name'    => $tmdb_tv['name'],
+                    'poster_path' => $tmdb_tv['poster_path'],
+                    'created_year' => $tmdb_tv['first_air_date']
+                ]);
+            } catch (Exception $e) {
+                return Redirect::back()->with('flash.banner', 'There is an error. Cannot create. Please enter again.')->with('flash.bannerStyle', 'danger');
+            }
             return Redirect::back()->with('flash.banner', 'Tv Show Created Successfully.');
         } else {
             return Redirect::back()->with('flash.banner', 'Api error.')->with('flash.bannerStyle', 'danger');
