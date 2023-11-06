@@ -172,18 +172,25 @@ import TableData from "@/Components/TableData.vue";
 import ButtonLink from "@/Components/ButtonLink.vue";
 
 const props = defineProps({
-    tvShow: {
-        type: Object,
-        required: true,
-    },
-    season: {
-        type: Object,
-        required: true,
-    },
-    episodes: {
-        type: Object,
-        required: true,
-    },
+    tvShow: Object,
+    season: Object,
+    filters: Object,
+    episodes: Object,
+});
+
+const search = ref(props.filters.search);
+const perPage = ref(props.filters.perPage);
+const episodeNumber = ref("");
+
+watch(search, (value) => {
+    router.get(
+        `/admin/tv-shows/${props.tvShow.id}/seasons/${props.season.id}/episodes`,
+        { search: value, perPage: perPage.value },
+        {
+            preserveState: true,
+            replace: true,
+        }
+    );
 });
 </script>
 <style lang=""></style>
