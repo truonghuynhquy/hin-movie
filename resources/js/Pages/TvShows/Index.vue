@@ -75,9 +75,12 @@
                                 <div class="flex">
                                     <select
                                         v-model="perPage"
-                                        @change="getTvShows"
-                                        class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
+                                        @change="getTags"
+                                        class="pl-4 pr-7 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
                                     >
+                                        <option value="null" disabled selected>
+                                            Choose Per Page
+                                        </option>
                                         <option value="5">5 Per Page</option>
                                         <option value="10">10 Per Page</option>
                                         <option value="15">15 Per Page</option>
