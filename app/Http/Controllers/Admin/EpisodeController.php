@@ -32,4 +32,30 @@ class EpisodeController extends Controller
             'filters' => Request::only(['search', 'perPage'])
         ]);
     }
+
+    public function store(TvShow $tvShow, Season $season)
+    {
+        $episode = $season->episodes()->where('episode_number', Request::input('episode_number'))->exists();
+        if ($episode) {
+            return Redirect::back()->with('error', 'Episode already exists');
+        }
+        $tmdb_episode = Http::asJson()->get(config('services.tmdb.endpoint') . 'tv/' . $tvShow->tmdb_id . '/season/' . $season->season_number . '/episode/' . Request::input('episodeNumber') . '?api_key=' . config('services.tmdb.secret') . '&language=en-US');
+
+        if ($tmdb_episode->successful()) {
+            try {
+                Episode::create([
+                    'season_id' => $season->id,
+                    'tmdb_id' => $tmdb_episode->json()['id'],
+                    'name' => $tmdb_episode->json()['name'],
+                    'episode_number' => $tmdb_episode->json()['episode_number'],
+                    'overview' => $tmdb_episode->json()['overview'],
+                ]);
+            } catch (\Throwable $e) {
+                return Redirect::back()->with('flash.banner', 'There is an error. Cannot create. Please enter again.')->with('flash.bannerStyle', 'danger');
+            }
+            return Redirect::back()->with('flash.banner', 'Episode created.');
+        } else {
+            return Redirect::back()->with('flash.banner', 'Api error.');
+        }
+    }
 }
