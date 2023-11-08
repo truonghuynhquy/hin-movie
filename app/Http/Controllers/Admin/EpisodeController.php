@@ -58,4 +58,30 @@ class EpisodeController extends Controller
             return Redirect::back()->with('flash.banner', 'Api error.');
         }
     }
+
+    public function edit(TvShow $tvShow, Season $season, Episode $episode)
+    {
+        return Inertia::render('TvShows/Seasons/Episodes/Edit', [
+            'tvShow' => $tvShow,
+            'season' => $season,
+            'episode' => $episode,
+        ]);
+    }
+
+    public function update(TvShow $tvShow, Season $season, Episode $episode)
+    {
+        $validated = Request::validate([
+            'name' => 'required',
+            'overview' => 'required',
+            'is_public' => 'required'
+        ]);
+        $episode->update($validated);
+        return Redirect::route('admin.episodes.index', [$tvShow->id, $season->id])->with('flash.banner', 'Genre Updated Successful.');
+    }
+
+    public function destroy(TvShow $tvShow, Season $season, Episode $episode)
+    {
+        $episode->delete();
+        return Redirect::route('admin.episodes.index', [$tvShow->id, $season->id])->with('flash.banner', 'Episode Deleted Successfully.')->with('flash.bannerStyle', 'danger');
+    }
 }
