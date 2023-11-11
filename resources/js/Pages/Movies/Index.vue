@@ -87,6 +87,7 @@
                                     <TableHead>Rating</TableHead>
                                     <TableHead>Visits</TableHead>
                                     <TableHead>Poster</TableHead>
+                                    <TableHead>Public</TableHead>
                                     <TableHead>Manage</TableHead>
                                 </template>
                                 <TableRow
@@ -102,12 +103,9 @@
                                             :src="`https://www.themoviedb.org/t/p/w220_and_h330_face/${movie.poster_path}`"
                                         />
                                     </TableData>
-                                    <TableData>{{
-                                        episode.episode_number
-                                    }}</TableData>
                                     <TableData>
                                         <span
-                                            v-if="episode.is_public"
+                                            v-if="movie.is_public"
                                             class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
                                         >
                                             Published
@@ -121,15 +119,7 @@
                                     </TableData>
                                     <TableData>
                                         <div class="flex space-x-2">
-                                            <ButtonLink
-                                                :link="
-                                                    route(
-                                                        'admin.movies.attach',
-                                                        movie.id
-                                                    )
-                                                "
-                                                >Attach</ButtonLink
-                                            >
+                                            <ButtonLink>Attach</ButtonLink>
                                             <ButtonLink
                                                 :link="
                                                     route(
