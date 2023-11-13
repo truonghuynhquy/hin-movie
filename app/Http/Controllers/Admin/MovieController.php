@@ -38,23 +38,27 @@ class MovieController extends Controller
         $apiMovie = Http::asJson()->get(config('services.tmdb.endpoint') . 'movie/' . Request::input('movieTMDBId') . '?api_key=' . config('services.tmdb.secret') . '&language=en-US');
 
         if ($apiMovie->successful()) {
-            $create_movie = Movie::create([
-                'tmdb_id' => $apiMovie->json()['id'],
-                'title' => $apiMovie->json()['title'],
-                'runtime' => $apiMovie->json()['runtime'],
-                'rating' => $apiMovie->json()['vote_average'],
-                'release_date' => $apiMovie->json()['release_date'],
-                'lang' => $apiMovie->json()['original_language'],
-                'video_format' => 'HD',
-                'is_public' => false,
-                'overview' => $apiMovie->json()['overview'],
-                'poster_path' => $apiMovie->json()['poster_path'],
-                'backdrop_path' => $apiMovie->json()['backdrop_path'],
-            ]);
-            $tmdb_genres = $apiMovie['genres'];
-            $tmdb_genres_ids = collect($tmdb_genres)->pluck('id');
-            $genres = Genre::whereIn('tmdb_id', $tmdb_genres_ids)->get();
-            $create_movie->genres()->attach($genres);
+            try {
+                $create_movie = Movie::create([
+                    'tmdb_id' => $apiMovie->json()['id'],
+                    'title' => $apiMovie->json()['title'],
+                    'runtime' => $apiMovie->json()['runtime'],
+                    'rating' => $apiMovie->json()['vote_average'],
+                    'release_date' => $apiMovie->json()['release_date'],
+                    'lang' => $apiMovie->json()['original_language'],
+                    'video_format' => 'HD',
+                    'is_public' => false,
+                    'overview' => $apiMovie->json()['overview'],
+                    'poster_path' => $apiMovie->json()['poster_path'],
+                    'backdrop_path' => $apiMovie->json()['backdrop_path'],
+                ]);
+                $tmdb_genres = $apiMovie['genres'];
+                $tmdb_genres_ids = collect($tmdb_genres)->pluck('id');
+                $genres = Genre::whereIn('tmdb_id', $tmdb_genres_ids)->get();
+                $create_movie->genres()->attach($genres);
+            } catch (\Throwable $e) {
+                return Redirect::back()->with('flash.banner', 'There is an error. Cannot create. Please enter again.')->with('flash.bannerStyle', 'danger');
+            }
             return Redirect::back()->with('flash.banner', 'Movie create.');
         } else {
             return Redirect::back()->with('flash.banner', 'Api error.');
