@@ -118,7 +118,7 @@
                                         </span>
                                     </TableData>
                                     <TableData>
-                                        <div class="flex space-x-2">
+                                        <div class="flex space-x-10">
                                             <ButtonLink>Attach</ButtonLink>
                                             <ButtonLink
                                                 :link="
