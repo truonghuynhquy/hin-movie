@@ -122,7 +122,15 @@
                                     </TableData>
                                     <TableData>
                                         <div class="flex space-x-10">
-                                            <ButtonLink>Attach</ButtonLink>
+                                            <ButtonLink
+                                                :link="
+                                                    route(
+                                                        'admin.movies.attach',
+                                                        movie.id
+                                                    )
+                                                "
+                                                >Attach</ButtonLink
+                                            >
                                             <ButtonLink
                                                 :link="
                                                     route(
