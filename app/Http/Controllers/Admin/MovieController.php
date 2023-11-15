@@ -14,7 +14,7 @@ class MovieController extends Controller
 {
     public function index()
     {
-        $perPage = Request::input('per_page') ?: 5;
+        $perPage = Request::input('perPage') ?: 5;
         return Inertia::render('Movies/Index', [
             'movies' => Movie::query()
                 ->when(Request::input('search'), function ($query, $search) {
