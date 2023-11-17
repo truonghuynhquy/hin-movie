@@ -1,11 +1,6 @@
 <template lang="">
     <AdminLayout title="Dashboard">
-        <template #header>
-            <!-- <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Genres Index
-            </h2> -->
-            Tv Show Index
-        </template>
+        <template #header> Tv Show Index </template>
 
         <div class="py-2">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
