@@ -10,6 +10,7 @@ class Tag extends Model
     use HasFactory;
 
     protected $fillable = ['tag_name', 'slug'];
+    protected $primaryKey = ['taggable_type', 'taggable_id'];
 
     public function movies()
     {

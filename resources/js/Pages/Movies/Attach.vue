@@ -1,5 +1,5 @@
 <template lang="">
-    <AdminLayout>
+    <AdminLayout title="Dashboard">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Movie Attach
@@ -168,11 +168,18 @@
                             </div>
                             <form @submit.prevent="addCast">
                                 <VueMultiselect
-                                    v-model="selected"
-                                    :options="options"
+                                    v-model="castForm.casts"
+                                    :options="casts"
+                                    :multiple="true"
+                                    :close-on-select="false"
+                                    :clear-on-select="false"
+                                    :preserve-search="true"
+                                    placeholder="Add Casts"
+                                    label="name"
+                                    track-by="name"
                                 ></VueMultiselect>
                                 <div class="mt-2">
-                                    <JetButton>add casts</JetButton>
+                                    <PrimaryButton>add casts</PrimaryButton>
                                 </div>
                             </form>
                         </div>
@@ -193,11 +200,18 @@
                             </div>
                             <form @submit.prevent="addTag">
                                 <VueMultiselect
-                                    v-model="selected"
-                                    :options="options"
+                                    v-model="tagForm.tags"
+                                    :options="tags"
+                                    :multiple="true"
+                                    :close-on-select="false"
+                                    :clear-on-select="false"
+                                    :preserve-search="true"
+                                    placeholder="Add Tags"
+                                    label="tag_name"
+                                    track-by="tag_name"
                                 ></VueMultiselect>
                                 <div class="mt-2">
-                                    <JetButton>add tags</JetButton>
+                                    <PrimaryButton>add tags</PrimaryButton>
                                 </div>
                             </form>
                         </div>
@@ -254,12 +268,19 @@ const castForm = useForm({
     casts: props.movieCasts,
 });
 const tagForm = useForm({
-    tags: props.movieTags,
+    tags: [],
 });
 
 function submitTrailer() {
     form.post(`/admin/movies/${props.movie.id}/add-trailer`, {
         onSuccess: () => form.reset(),
+    });
+}
+
+function addCast() {
+    castForm.post(`/admin/movies/${props.movie.id}/add-casts`, {
+        preserveState: true,
+        preserveScroll: true,
     });
 }
 </script>

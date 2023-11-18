@@ -25,7 +25,14 @@ use Inertia\Inertia;
 
 
 
-
+Route::get('/', function () {
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+})->middleware(['guest']);
 
 Route::middleware(['auth:sanctum', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', function () {
@@ -35,7 +42,12 @@ Route::middleware(['auth:sanctum', 'verified', 'role:admin'])->prefix('admin')->
     Route::resource('/movies', MovieController::class);
     Route::get('/movies/{movie}/attach', [MovieAttachController::class, 'index'])->name('movies.attach');
     Route::post('/movies/{movie}/add-trailer', [MovieAttachController::class, 'addTrailer'])->name('movies.add.trailer');
+    Route::post('/movies/{movie}/add-casts', [MovieAttachController::class, 'addCast'])->name('movies.add.casts');
     Route::delete('/trailer-urls/{trailer_url}', [MovieAttachController::class, 'destroyTrailer'])->name('trailers.destroy');
+
+    Route::post('/movies/{movie}/add-tags', [MovieAttachController::class, 'addTag'])->name(
+        'movies.add.tags'
+    );
 
     Route::resource('/tv-shows', TvShowController::class);
     Route::resource('/tv-shows/{tv_show}/seasons', SeasonController::class);

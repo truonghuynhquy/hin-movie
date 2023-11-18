@@ -41,6 +41,21 @@ class MovieAttachController extends Controller
     public function destroyTrailer(TrailerUrl $trailerUrl)
     {
         $trailerUrl->delete();
-        return Redirect::back()->with('flash.banner', 'Trailer deleted.');
+        return Redirect::back()->with('flash.banner', 'Trailer Deleted.');
+    }
+
+    public function addCast(Movie $movie)
+    {
+        $cast = Request::input('casts');
+        $cast_ids = collect($cast)->pluck('id');
+        $movie->casts()->sync($cast_ids);
+        return Redirect::back()->with('flash.banner', 'Casts Attached.');
+    }
+    public function addTag(Movie $movie)
+    {
+        $tags = Request::input('tags');
+        $tag_ids = collect($tags)->pluck('id');
+        $movie->tags()->sync($tag_ids);
+        return Redirect::back()->with('flash.banner', 'Tags attached.');
     }
 }

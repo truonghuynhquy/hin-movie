@@ -215,6 +215,9 @@ function generateMovie() {
         `/admin/movies`,
         { movieTMDBId: movieTMDBId.value },
         {
+            onFinish: () => {
+                movieTMDBId.value = "";
+            },
             preserveState: true,
             replace: true,
         }

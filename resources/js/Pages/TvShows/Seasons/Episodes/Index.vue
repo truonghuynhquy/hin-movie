@@ -212,6 +212,7 @@ function generateEpisode() {
         `/admin/tv-shows/${props.tvShow.id}/seasons/${props.season.id}/episodes`,
         { episodeNumber: episodeNumber.value },
         {
+            onFinish: () => (episodeNumber.value = ""),
             preserveState: true,
             replace: true,
         }

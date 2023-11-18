@@ -39,4 +39,14 @@ class Movie extends Model
     {
         return $this->morphMany(TrailerUrl::class, 'trailerable');
     }
+
+    public function casts()
+    {
+        return $this->belongsToMany(Cast::class, 'cast_movie');
+    }
+
+    public function tags()
+    {
+        return $this->morphMany(Tag::class, 'taggable');
+    }
 }
