@@ -19,13 +19,17 @@ class MovieController extends Controller
             'movies' => Movie::query()
                 ->when(Request::input('search'), function ($query, $search) {
                     $query->where('title', 'LIKE', "%{$search}%");
+                })->when(Request::has('column'), function ($query) {
+                    $query->orderBy(Request::input('column'), Request::input('direction'));
                 })
                 ->paginate($perPage)
                 ->appends([
                     'search' => Request::input('search'),
-                    'perPage' => Request::input('perPage')
+                    'perPage' => Request::input('perPage'),
+                    'column' => Request::input('column'),
+                    'direction' => Request::input('direction'),
                 ]),
-            'filters' => Request::only(['search', 'perPage']),
+            'filters' => Request::only(['search', 'perPage', 'column', 'direction']),
         ]);
     }
 

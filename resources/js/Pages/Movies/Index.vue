@@ -60,7 +60,7 @@
                                         </div>
 
                                         <input
-                                            v-model="search"
+                                            v-model="movieFilters.search"
                                             type="text"
                                             placeholder="Search by title"
                                             class="px-8 py-3 w-full md:w-2/6 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
@@ -69,8 +69,11 @@
                                 </div>
                                 <div class="flex">
                                     <select
-                                        v-model="perPage"
-                                        @change="getMovies"
+                                        v-model="movieFilters.perPage"
+                                        @change="
+                                            movieFilters.perPage ===
+                                                $event.target.value
+                                        "
                                         class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
                                     >
                                         <option value="null" disabled selected>
@@ -86,8 +89,12 @@
                         <div class="w-full overflow-x-auto">
                             <Table>
                                 <template #tableHead>
-                                    <TableHead>Title</TableHead>
-                                    <TableHead>Rating</TableHead>
+                                    <TableHead @click="sort('title')"
+                                        >Title</TableHead
+                                    >
+                                    <TableHead @click="sort('rating')"
+                                        >Rating</TableHead
+                                    >
                                     <TableHead>Visits</TableHead>
                                     <TableHead>Poster</TableHead>
                                     <TableHead>Public</TableHead>
@@ -171,43 +178,50 @@
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Link } from "@inertiajs/vue3";
 import Pagination from "@/Components/Pagination.vue";
-import { ref, watch, defineProps } from "vue";
+import { ref, watch, reactive } from "vue";
 import { router } from "@inertiajs/vue3";
 import Table from "@/Components/Table.vue";
 import TableHead from "@/Components/TableHead.vue";
 import TableRow from "@/Components/TableRow.vue";
 import TableData from "@/Components/TableData.vue";
 import ButtonLink from "@/Components/ButtonLink.vue";
+import { throttle, pickBy } from "lodash";
 
 const props = defineProps({
     movies: Object,
     filters: Object,
 });
-
-const search = ref(props.filters.search);
-const perPage = ref(props.filters.perPage);
+const movieFilters = reactive({
+    search: props.filters.search,
+    perPage: props.filters.perPage,
+    column: props.filters.column,
+    direction: props.filters.direction,
+});
 const movieTMDBId = ref("");
 
-watch(search, (value) => {
-    router.get(
-        `/admin/movies`,
-        { search: value, perPage: perPage.value },
-        {
-            preserveState: true,
-            replace: true,
-        }
-    );
-});
+watch(
+    movieFilters,
+    throttle(() => {
+        let query = pickBy(movieFilters);
+        let queryRoute = route(
+            "admin.movies.index",
+            Object.keys(query).length ? query : { remember: "forget" }
+        );
+        router.get(
+            queryRoute,
+            {},
+            {
+                preserveState: true,
+                replace: true,
+            }
+        );
+    }, 400),
+    { deep: true }
+);
 
-function getMovies() {
-    router.get(
-        `/admin/movies`,
-        { perPage: perPage.value, search: search.value },
-        {
-            preserveState: true,
-            replace: true,
-        }
-    );
+function sort(column) {
+    movieFilters.column = column;
+    movieFilters.direction = movieFilters.direction === "asc" ? "desc" : "asc";
 }
 
 function generateMovie() {

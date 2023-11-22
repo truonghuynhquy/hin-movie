@@ -268,7 +268,7 @@ const castForm = useForm({
     casts: props.movieCasts,
 });
 const tagForm = useForm({
-    tags: [],
+    tags: props.movieTags,
 });
 
 function submitTrailer() {
@@ -279,6 +279,13 @@ function submitTrailer() {
 
 function addCast() {
     castForm.post(`/admin/movies/${props.movie.id}/add-casts`, {
+        preserveState: true,
+        preserveScroll: true,
+    });
+}
+
+function addTag() {
+    tagForm.post(`/admin/movies/${props.movie.id}/add-tags`, {
         preserveState: true,
         preserveScroll: true,
     });

@@ -44,9 +44,8 @@ class Movie extends Model
     {
         return $this->belongsToMany(Cast::class, 'cast_movie');
     }
-
     public function tags()
     {
-        return $this->morphMany(Tag::class, 'taggable');
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 }
