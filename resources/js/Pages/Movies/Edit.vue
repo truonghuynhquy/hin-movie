@@ -1,5 +1,5 @@
 <template lang="">
-    <AdminLayout>
+    <AdminLayout title="Dashboard">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Movie Edit
@@ -32,7 +32,10 @@
                             </div>
 
                             <div class="mt-4">
-                                <InputLabel for="runtime" value="Runtime" />
+                                <InputLabel
+                                    for="runtime"
+                                    value="Runtime (minute)"
+                                />
                                 <TextInput
                                     id="runtime"
                                     type="text"
@@ -144,14 +147,14 @@
 
                             <div class="mt-4">
                                 <InputLabel for="overview" value="Overview" />
-                                <TextInput
+                                <textarea
                                     id="overview"
                                     type="text"
                                     class="mt-1 block w-full"
                                     v-model="form.overview"
                                     autofocus
                                     autocomplete="overview"
-                                />
+                                ></textarea>
                                 <div
                                     class="text-sm text-red-400"
                                     v-if="form.errors.overview"

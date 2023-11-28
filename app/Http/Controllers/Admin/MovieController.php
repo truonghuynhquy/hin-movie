@@ -12,24 +12,33 @@ use Inertia\Inertia;
 
 class MovieController extends Controller
 {
-    public function index()
+    public function index(Movie $movie)
     {
         $perPage = Request::input('perPage') ?: 5;
+
+        $movies = Movie::query()
+            ->when(Request::input('search'), function ($query, $search) {
+                $query->where('title', 'LIKE', "%{$search}%");
+            })->when(Request::has('column'), function ($query) {
+                $query->orderBy(Request::input('column'), Request::input('direction'));
+            })
+            ->paginate($perPage)
+            ->appends([
+                'search' => Request::input('search'),
+                'perPage' => Request::input('perPage'),
+                'column' => Request::input('column'),
+                'direction' => Request::input('direction'),
+            ]);
+
+        foreach ($movies as $movie) {
+            $runtimeHours = floor($movie->runtime / 60);
+            $runtimeMinutes = $movie->runtime % 60;
+            $movie->formattedRuntime = $runtimeHours . 'h ' . $runtimeMinutes . 'm';
+        }
+
         return Inertia::render('Movies/Index', [
-            'movies' => Movie::query()
-                ->when(Request::input('search'), function ($query, $search) {
-                    $query->where('title', 'LIKE', "%{$search}%");
-                })->when(Request::has('column'), function ($query) {
-                    $query->orderBy(Request::input('column'), Request::input('direction'));
-                })
-                ->paginate($perPage)
-                ->appends([
-                    'search' => Request::input('search'),
-                    'perPage' => Request::input('perPage'),
-                    'column' => Request::input('column'),
-                    'direction' => Request::input('direction'),
-                ]),
-            'filters' => Request::only(['search', 'perPage', 'column', 'direction']),
+            'movies' => $movies,
+            'filters' => Request::only(['search', 'perPage']),
         ]);
     }
 
