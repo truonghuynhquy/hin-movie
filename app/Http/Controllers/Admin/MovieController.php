@@ -12,7 +12,7 @@ use Inertia\Inertia;
 
 class MovieController extends Controller
 {
-    public function index(Movie $movie)
+    public function index()
     {
         $perPage = Request::input('perPage') ?: 5;
 
