@@ -42,9 +42,9 @@
                                 >
                                     <span
                                         class="text-xl font-bold text-blue-500"
-                                        >5</span
+                                        >{{ totalUser }}</span
                                     >
-                                    Users in Database
+                                    UserAdmins in Database
                                 </div>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                                 >
                                     <span
                                         class="text-xl font-bold text-blue-500"
-                                        >5</span
+                                        >{{ totalMovie }}</span
                                     >
                                     Movies in Database
                                 </div>
@@ -101,9 +101,9 @@
                                 >
                                     <span
                                         class="text-xl font-bold text-blue-500"
-                                        >5</span
+                                        >{{ totalTvShow }}</span
                                     >
-                                    Series in Database
+                                    TvShows in Database
                                 </div>
                             </div>
                         </div>
@@ -129,7 +129,7 @@
                                     <span
                                         class="text-xl font-bold text-blue-500"
                                     >
-                                        5</span
+                                        {{ totalCast }}</span
                                     >
                                     Casts in Database
                                 </div>
@@ -144,5 +144,12 @@
 
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
+
+const props = defineProps({
+    totalMovie: Object,
+    totalTvShow: Object,
+    totalCast: Object,
+    totalUser: Object,
+});
 </script>
 <style></style>

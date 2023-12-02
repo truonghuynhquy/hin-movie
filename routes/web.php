@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\CastController;
 use App\Http\Controllers\Admin\EpisodeController;
 use App\Http\Controllers\Admin\GenreController;
@@ -35,9 +36,7 @@ Route::get('/', function () {
 })->middleware(['guest']);
 
 Route::middleware(['auth:sanctum', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', function () {
-        return Inertia::render('Admin/Index');
-    })->name('index');
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('index');
 
     Route::resource('/movies', MovieController::class);
     Route::get('/movies/{movie}/attach', [MovieAttachController::class, 'index'])->name('movies.attach');
@@ -60,5 +59,6 @@ Route::middleware(['auth:sanctum', 'verified', 'role:admin'])->prefix('admin')->
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    // auth()->user()->assignRole('admin');
     return Inertia::render('Dashboard');
 })->name('dashboard');
