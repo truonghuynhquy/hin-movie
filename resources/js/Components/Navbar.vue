@@ -11,12 +11,15 @@
                 <a
                     href="/"
                     class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline"
-                    >Movie App</a
-                >
+                    ><img
+                        class="h-8 w-32"
+                        src="/images/LogoMovie.png"
+                        alt="Logo Movie"
+                /></a>
                 <!-- SearchModal -->
                 <button
                     class="md:hidden rounded-lg focus:outline-none focus:shadow-outline"
-                    @click="openMobileMenu = !openMobileMenu"
+                    @click="clickOpenMobileMenu"
                 >
                     <svg
                         fill="currentColor"
@@ -70,5 +73,11 @@ import Dropdown from "./Dropdown.vue";
 
 const open = ref(false);
 const openMobileMenu = ref(false);
+
+console.log(openMobileMenu.value);
+function clickOpenMobileMenu(event) {
+    openMobileMenu.value = !openMobileMenu.value;
+    console.log(openMobileMenu.value);
+}
 </script>
 <style lang=""></style>
