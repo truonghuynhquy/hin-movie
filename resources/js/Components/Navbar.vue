@@ -19,7 +19,7 @@
                 <!-- SearchModal -->
                 <button
                     class="md:hidden rounded-lg focus:outline-none focus:shadow-outline"
-                    @click="clickOpenMobileMenu"
+                    @click="openMobileMenu = !openMobileMenu"
                 >
                     <svg
                         fill="currentColor"
@@ -73,11 +73,5 @@ import Dropdown from "./Dropdown.vue";
 
 const open = ref(false);
 const openMobileMenu = ref(false);
-
-console.log(openMobileMenu.value);
-function clickOpenMobileMenu(event) {
-    openMobileMenu.value = !openMobileMenu.value;
-    console.log(openMobileMenu.value);
-}
 </script>
 <style lang=""></style>
