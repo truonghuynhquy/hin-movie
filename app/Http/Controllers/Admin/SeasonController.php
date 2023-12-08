@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Season;
 use App\Models\TvShow;
+use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -40,13 +41,18 @@ class SeasonController extends Controller
         }
         $tmdb_season = Http::asJson()->get(config('services.tmdb.endpoint') . 'tv/' . $tvShow->tmdb_id . '/season/' . Request::input('seasonNumber') . '?api_key=' . config('services.tmdb.secret') . '&language=en-US');
         if ($tmdb_season->successful()) {
-            Season::create([
-                'tv_show_id' => $tvShow->id,
-                'tmdb_id' => $tmdb_season['id'],
-                'name'    => $tmdb_season['name'],
-                'poster_path' => $tmdb_season['poster_path'],
-                'season_number' => $tmdb_season['season_number']
-            ]);
+            try {
+                Season::create([
+                    'tv_show_id' => $tvShow->id,
+                    'tmdb_id' => $tmdb_season['id'],
+                    'name'    => $tmdb_season['name'],
+                    'poster_path' => $tmdb_season['poster_path'],
+                    'season_number' => $tmdb_season['season_number']
+                ]);
+            } catch (Exception $e) {
+                return Redirect::back()->with('flash.banner', 'There is an error. Cannot create. Please enter again.')->with('flash.bannerStyle', 'danger');
+            }
+
             return Redirect::back()->with('flash.banner', 'Season Created Successfully.');
         } else {
             return Redirect::back()->with('flash.banner', 'Api error.')->with('flash.bannerStyle', 'danger');
