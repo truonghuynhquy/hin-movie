@@ -96,6 +96,9 @@ const components = {
                                         class="circle_progressbar"
                                         :percent="movie.percentMovie"
                                         :is-gradient="true"
+                                        :size="50"
+                                        :border-width="5"
+                                        :border-bg-width="5"
                                     />
                                     <span class="percent"
                                         >{{ movie.percentMovie }}%</span
