@@ -48,8 +48,7 @@
             >
                 <Link
                     :class="{
-                        'bg-gray-600':
-                            $page.component === 'Frontend/Movies/Index',
+                        active: $page.component === 'Frontend/Movies/Index',
                     }"
                     class="bg-transparent px-4 py-2 mt-2 text-sm font-semibold rounded-lg dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                     href="/movies"
@@ -57,8 +56,7 @@
                 >
                 <Link
                     :class="{
-                        'bg-gray-600':
-                            $page.component === 'Frontend/TvShows/Index',
+                        active: $page.component === 'Frontend/TvShows/Index',
                     }"
                     class="bg-transparent px-4 py-2 mt-2 text-sm font-semibold rounded-lg dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                     href="/tv-shows"
@@ -66,8 +64,7 @@
                 >
                 <Link
                     :class="{
-                        'bg-gray-600':
-                            $page.component === 'Frontend/Casts/Index',
+                        active: $page.component === 'Frontend/Casts/Index',
                     }"
                     class="bg-transparent px-4 py-2 mt-2 text-sm font-semibold rounded-lg dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                     href="/casts"
@@ -85,4 +82,8 @@ import Dropdown from "./Dropdown.vue";
 
 const openMobileMenu = ref(false);
 </script>
-<style></style>
+<style>
+.active {
+    background-color: rgb(75 85 99 / var(--tw-bg-opacity));
+}
+</style>

@@ -43,7 +43,9 @@ const components = {
             <section
                 class="bg-gray-200 dark:bg-gray-900 dark:text-white mt-4 p-2 rounded"
             >
-                <div class="m-2 p-2 text-2xl font-bold text-indigo-100">
+                <div
+                    class="m-2 p-2 text-2xl font-bold text-indigo-600 dark:text-indigo-300"
+                >
                     <h1>Movies</h1>
                 </div>
                 <div
@@ -131,7 +133,9 @@ const components = {
             <section
                 class="bg-gray-200 dark:bg-gray-900 dark:text-white mt-4 p-2 rounded"
             >
-                <div class="m-2 p-2 text-2xl font-bold text-indigo-100">
+                <div
+                    class="m-2 p-2 text-2xl font-bold text-indigo-600 dark:text-indigo-300"
+                >
                     <h1>Episodes</h1>
                 </div>
                 <div
