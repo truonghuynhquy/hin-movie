@@ -1,4 +1,4 @@
-<template lang="">
+<template>
     <Menu as="div" class="relative inline-block text-left" v-slot="{ open }">
         <div>
             <MenuButton
@@ -46,8 +46,8 @@
                             >{{ genre.title }}</Link
                         >
                     </MenuItem>
-                </div></MenuItems
-            >
+                </div>
+            </MenuItems>
         </transition>
     </Menu>
 </template>

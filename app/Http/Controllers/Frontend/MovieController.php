@@ -22,7 +22,21 @@ class MovieController extends Controller
         ]);
     }
 
-    public function show()
+    public function show(Movie $movie)
     {
+        $latests = Movie::orderBy('created_at', 'desc')->take(9)->get();
+
+        $runtimeHours = floor($movie->runtime / 60);
+        $runtimeMinutes = $movie->runtime % 60;
+        $movie->formattedRuntime = $runtimeHours . 'h ' . $runtimeMinutes . 'm';
+
+        return Inertia::render('Frontend/Movies/Show', [
+            'movie' => $movie,
+            'latests' => $latests,
+            'movieGenres' => $movie->genres,
+            'casts' => $movie->casts,
+            'tags' => $movie->tags,
+            'trailers' => $movie->trailers,
+        ]);
     }
 }
