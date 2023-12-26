@@ -2,32 +2,51 @@
     <Head :title="`${movie.title}`" />
     <FrontLayout>
         <main v-if="movie" class="mt-[-8px]">
-            <section class="bg-gradient-to-r from-indigo-800 to-transparent">
+            <section class="bg-gradient-to-r from-[#131244] to-transparent">
                 <div class="max-w-6xl mx-auto m-4 p-2">
-                    <div class="flex">
-                        <div class="w-3/12">
-                            <div class="w-full">
+                    <div class="flex phone_xl">
+                        <div class="w-3/12 tablet phone_xl-4">
+                            <div class="w-full tablet-1">
                                 <img
                                     class="w-full h-full rounded"
-                                    :src="`https://www.themoviedb.org/t/p/w220_and_h330_face/${movie.poster_path}`"
+                                    :src="`https://www.themoviedb.org/t/p/w600_and_h900_face/${movie.poster_path}`"
                                 />
                             </div>
                         </div>
-                        <div class="w-8/12">
-                            <div class="m-4 p-6">
+                        <div class="w-8/12 phone_xl-1">
+                            <div class="m-4 pt-6 pl-6 pr-6 pb-2">
                                 <h1 class="flex text-white font-bold text-4xl">
                                     {{ movie.title }}
                                 </h1>
-                                <div class="flex p-3 text-white space-x-4">
+                                <div
+                                    class="flex p-3 text-white space-x-4 phone_p19"
+                                >
                                     <span>{{ movie.release_date }}</span>
                                     <span>
                                         <Link
-                                            v-for="genre in movieGenres"
+                                            v-for="(
+                                                genre, index
+                                            ) in movieGenres"
                                             :key="genre.id"
                                             class="font-thin subpixel-antialiased hover:text-blue-500"
                                             :href="`/genres/${genre.slug}`"
                                         >
-                                            {{ genre.title }} ,
+                                            {{ genre.title }}
+                                            <template
+                                                v-if="
+                                                    index !==
+                                                    movieGenres.length - 1
+                                                "
+                                                >,</template
+                                            >
+                                            <template
+                                                v-if="
+                                                    index === 3 &&
+                                                    index !==
+                                                        movieGenres.length - 1
+                                                "
+                                                ><br
+                                            /></template>
                                         </Link>
                                     </span>
                                     <span class="flex space-x-2">
@@ -48,7 +67,7 @@
                                         </svg>
                                     </span>
                                 </div>
-                                <div class="flex space-x-4">
+                                <div class="flex space-x-4 phone_xl-2">
                                     <div
                                         class="flex pr-4 text-white font-bold z-10"
                                     >
@@ -85,7 +104,7 @@
                                 </div>
                             </div>
 
-                            <div class="pl-12 text-white">
+                            <div class="pl-12 text-white mb-4 phone_xl-3">
                                 <p class="font-bold text-lg">Overview</p>
                                 <p>{{ movie.overview }}</p>
                             </div>
@@ -110,7 +129,7 @@
                                     <Link :href="`/casts/${cast.slug}`">
                                         <img
                                             class=""
-                                            :src="`https://www.themoviedb.org/t/p/w220_and_h330_face/${cast.poster_path}`"
+                                            :src="`https://www.themoviedb.org/t/p/w600_and_h900_face/${cast.poster_path}`"
                                         />
                                     </Link>
                                 </template>
@@ -140,7 +159,7 @@
                             >
                                 <img
                                     class="w-full h-full rounded-lg"
-                                    :src="`https://www.themoviedb.org/t/p/w220_and_h330_face/${lm.poster_path}`"
+                                    :src="`https://www.themoviedb.org/t/p/w600_and_h900_face/${lm.poster_path}`"
                                 />
                             </Link>
                         </div>
@@ -165,23 +184,28 @@
     </FrontLayout>
 
     <TransitionRoot appear :show="isOpen" as="template">
-        <Dialog as="div" @close="closeModal" class="relative z-10">
-            <TransitionChild
-                as="template"
-                enter="duration-300 ease-out"
-                enter-from="opacity-0"
-                enter-to="opacity-100"
-                leave="duration-200 ease-in"
-                leave-from="opacity-100"
-                leave-to="opacity-0"
-            >
-                <div class="fixed inset-0 bg-black/25" />
-            </TransitionChild>
+        <Dialog as="div" @close="closeModal">
+            <div class="fixed inset-0 z-10 overflow-y-auto">
+                <div class="min-h-screen px-4 text-center">
+                    <TransitionChild
+                        as="template"
+                        enter="duration-300 ease-out"
+                        enter-from="opacity-0"
+                        enter-to="opacity-100"
+                        leave="duration-200 ease-in"
+                        leave-from="opacity-100"
+                        leave-to="opacity-0"
+                    >
+                        <DialogOverlay class="fixed inset-0" />
+                    </TransitionChild>
 
-            <div class="fixed inset-0 overflow-y-auto">
-                <div
-                    class="flex min-h-full items-center justify-center p-4 text-center"
-                >
+                    <span
+                        class="inline-block h-screen align-middle"
+                        aria-hidden="true"
+                    >
+                        &#8203;
+                    </span>
+
                     <TransitionChild
                         as="template"
                         enter="duration-300 ease-out"
@@ -191,33 +215,32 @@
                         leave-from="opacity-100 scale-100"
                         leave-to="opacity-0 scale-95"
                     >
-                        <DialogPanel
-                            class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+                        <div
+                            class="inline-block w-full max-w-6xl p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl"
                         >
                             <DialogTitle
                                 as="h3"
                                 class="text-lg font-medium leading-6 text-gray-900"
                             >
-                                Payment successful
+                                {{ movie.title }}
                             </DialogTitle>
-                            <div class="mt-2">
-                                <p class="text-sm text-gray-500">
-                                    Your payment has been successfully
-                                    submitted. We’ve sent you an email with all
-                                    of the details of your order.
-                                </p>
+                            <div class="mt-2" v-if="modalTrailer">
+                                <div
+                                    class="aspect-w-16 aspect-h-9"
+                                    v-html="modalTrailer.embed_html"
+                                ></div>
                             </div>
 
                             <div class="mt-4">
                                 <button
                                     type="button"
-                                    class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                    class="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                                     @click="closeModal"
                                 >
-                                    Got it, thanks!
+                                    Close
                                 </button>
                             </div>
-                        </DialogPanel>
+                        </div>
                     </TransitionChild>
                 </div>
             </div>
@@ -276,5 +299,40 @@ function openModal(trailer) {
     top: 0;
     transform: translate(46%, 72%);
     font-size: 0.8rem;
+}
+@media screen and (min-width: 767px) and (max-width: 860px) {
+    .tablet {
+        position: relative;
+    }
+    .tablet-1 {
+        width: 100%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .min-h-screen {
+        min-height: 100%;
+    }
+}
+@media screen and (min-width: 300px) and (max-width: 767px) {
+    .phone_xl {
+        display: unset;
+        position: relative;
+    }
+    .phone_xl-1 {
+        width: unset;
+        text-align: center;
+    }
+    .phone_xl-2 {
+        padding-top: 1rem;
+        justify-content: center;
+    }
+    .phone_xl-3 {
+        padding-left: unset;
+    }
+    .phone_xl-4 {
+        width: 100%;
+    }
 }
 </style>
