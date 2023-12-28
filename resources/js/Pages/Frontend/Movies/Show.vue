@@ -116,8 +116,8 @@
             <section
                 class="max-w-6xl mx-auto bg-gray-200 dark:bg-gray-900 p-2 rounded"
             >
-                <div class="flex justify-between">
-                    <div class="w-7/12">
+                <div class="flex justify-between phone_x2">
+                    <div class="lg: w-7/12 phone_x2-1">
                         <h1
                             class="flex text-slate-600 dark:text-white font-bold text-xl"
                         >
@@ -142,7 +142,7 @@
                             </MovieCard>
                         </div>
                     </div>
-                    <div class="w-4/12">
+                    <div class="lg: w-4/12 phone_x2-2">
                         <h1
                             class="flex text-slate-600 dark:text-white font-bold text-xl mb-4"
                         >
@@ -333,6 +333,16 @@ function openModal(trailer) {
     }
     .phone_xl-4 {
         width: 100%;
+    }
+    .phone_x2 {
+        display: unset;
+    }
+    .phone_x2 .phone_x2-1,
+    .phone_x2-2 {
+        width: unset;
+    }
+    .phone_x2-2 {
+        padding-top: 1rem;
     }
 }
 </style>
