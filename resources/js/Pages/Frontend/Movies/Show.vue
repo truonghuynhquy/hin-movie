@@ -15,12 +15,12 @@
                         </div>
                         <div class="w-8/12 phone_xl-1">
                             <div class="m-4 pt-6 pl-6 pr-6 pb-2">
-                                <h1 class="flex text-white font-bold text-4xl">
+                                <h1
+                                    class="flex text-white font-bold text-4xl unset_flex"
+                                >
                                     {{ movie.title }}
                                 </h1>
-                                <div
-                                    class="flex p-3 text-white space-x-4 phone_p19"
-                                >
+                                <div class="flex p-3 text-white space-x-4">
                                     <span>{{ movie.release_date }}</span>
                                     <span>
                                         <Link
@@ -37,11 +37,12 @@
                                                     index !==
                                                     movieGenres.length - 1
                                                 "
-                                                >,</template
-                                            >
+                                                >,
+                                            </template>
                                             <template
                                                 v-if="
-                                                    index === 3 &&
+                                                    index !== 0 &&
+                                                    (index + 1) % 3 === 0 &&
                                                     index !==
                                                         movieGenres.length - 1
                                                 "
@@ -316,6 +317,9 @@ function openModal(trailer) {
     }
 }
 @media screen and (min-width: 300px) and (max-width: 767px) {
+    .unset_flex {
+        display: unset;
+    }
     .phone_xl {
         display: unset;
         position: relative;
