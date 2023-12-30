@@ -1,7 +1,7 @@
 <template lang="">
-    <Head :title="`${tvShow.name}`" />
+    <Head :title="`${season.name} Season`" />
     <FrontLayout>
-        <main v-if="tvShow" class="mt-[-8px]">
+        <main v-if="season" class="mt-[-8px]">
             <section class="bg-gradient-to-r from-[#131244] to-transparent">
                 <div class="max-w-6xl mx-auto m-4 p-2">
                     <div class="flex phone_xl">
@@ -9,72 +9,34 @@
                             <div class="w-full tablet-1">
                                 <img
                                     class="w-full h-full rounded"
-                                    :src="`https://www.themoviedb.org/t/p/w600_and_h900_face/${tvShow.poster_path}`"
+                                    :src="`https://www.themoviedb.org/t/p/w600_and_h900_face/${season.poster_path}`"
                                 />
                             </div>
                         </div>
-
                         <div class="w-8/12 phone_xl-1">
                             <div class="m-4 p-6">
                                 <h1
                                     class="flex text-white font-bold text-4xl unset_flex"
                                 >
-                                    {{ tvShow.name }}
+                                    {{ season.name }}
                                 </h1>
                                 <div
                                     class="flex pt-4 pr-3 pb-3 pl-0 text-white space-x-4 phone_justify-text"
                                 >
-                                    <span>{{ tvShow.created_year }}</span>
-                                    <span>
-                                        <Link
-                                            v-for="(
-                                                genre, index
-                                            ) in tvShow.genreNames"
-                                            :key="genre.id"
-                                            class="font-thin subpixel-antialiased hover:text-blue-500"
-                                            :href="`/genres/${genre.slug}`"
-                                        >
-                                            {{ genre }}
-                                            <template
-                                                v-if="
-                                                    index !==
-                                                    tvShow.genreNames.length - 1
-                                                "
-                                                >,
-                                            </template>
-                                            <template
-                                                v-if="
-                                                    index !== 0 &&
-                                                    (index + 1) % 3 === 0 &&
-                                                    index !==
-                                                        tvShow.genreNames
-                                                            .length -
-                                                            1
-                                                "
-                                                ><br
-                                            /></template>
-                                        </Link>
-                                    </span>
+                                    <span
+                                        >Season Nr:
+                                        {{ season.season_number }}</span
+                                    >
+                                    <span
+                                        >Tv Show: {{ tvShow.name }} -
+                                        {{ tvShow.created_year }}</span
+                                    >
                                 </div>
-                            </div>
-                            <div class="pl-10 text-white mb-4 clear_pl-10">
-                                <p class="font-bold text-xl">Overview</p>
-                                <p>{{ tvShow.overView }}</p>
-                            </div>
-                            <div
-                                v-if="tvShow.creatorNames != null"
-                                class="mt-10 pl-10 text-white clear_pl-10"
-                            >
-                                <p class="font-bold text-lg">
-                                    {{ tvShow.creatorNames }}
-                                </p>
-                                <p class="font-light italic">Creator</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-
             <section
                 class="max-w-6xl mx-auto bg-gray-200 dark:bg-gray-900 p-2 rounded"
             >
@@ -83,35 +45,31 @@
                         <h1
                             class="flex text-slate-600 dark:text-white font-bold text-xl"
                         >
-                            Seasons
+                            Episodes
                         </h1>
                         <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mt-4">
                             <MovieCard
-                                v-for="season in seasons"
-                                :key="season.id"
+                                v-for="episode in episodes"
+                                :key="episode.id"
                             >
                                 <template #image>
-                                    <Link
-                                        :href="`/tv-shows/${tvShow.slug}/seasons/${season.slug}`"
-                                    >
+                                    <Link :href="`/episodes/${episode.slug}`">
                                         <img
                                             class=""
                                             :src="`https://www.themoviedb.org/t/p/w600_and_h900_face/${season.poster_path}`"
                                         />
                                     </Link>
                                 </template>
-                                <Link
-                                    :href="`/tv-shows/${tvShow.slug}/seasons/${season.slug}`"
-                                >
+                                <Link :href="`/episodes/${episode.slug}`">
                                     <span
                                         class="text-slate-600 dark:text-white"
-                                        >{{ season.name }}</span
+                                        >{{ episode.name }}</span
                                     >
                                 </Link>
                             </MovieCard>
                         </div>
                     </div>
-                    <div class="lg: w-4/12 phone_x2-2">
+                    <div class="w-4/12 phone_x2-2">
                         <h1
                             class="flex text-slate-600 dark:text-white font-bold text-xl mb-4"
                         >
@@ -147,7 +105,8 @@ import MovieCard from "@/Components/MovieCard.vue";
 defineProps({
     tvShow: Object,
     latests: Array,
-    seasons: Array,
+    episodes: Array,
+    season: Object,
 });
 </script>
 <style>

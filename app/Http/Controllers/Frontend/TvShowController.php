@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Movie;
+use App\Models\Season;
 use App\Models\TvShow;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
@@ -46,7 +47,15 @@ class TvShowController extends Controller
         ]);
     }
 
-    public function seasonShow()
+    public function seasonShow(TvShow $tvShow, Season $season)
     {
+        $latests = Movie::orderBy('created_at', 'desc')->take(9)->get();
+
+        return Inertia::render('Frontend/TvShows/Seasons/Show', [
+            'latests' => $latests,
+            'tvShow' => $tvShow,
+            'episodes' => $season->episodes,
+            'season' => $season
+        ]);
     }
 }
