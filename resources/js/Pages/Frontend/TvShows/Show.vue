@@ -57,7 +57,9 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="pl-10 text-white mb-4 clear_pl-10">
+                            <div
+                                class="pl-10 text-white mb-4 clear_pl-10 lg:text-justify"
+                            >
                                 <p class="font-bold text-xl">Overview</p>
                                 <p>{{ tvShow.overView }}</p>
                             </div>

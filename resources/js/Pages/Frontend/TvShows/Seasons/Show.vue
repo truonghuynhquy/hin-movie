@@ -4,7 +4,7 @@
         <main v-if="season" class="mt-[-8px]">
             <section class="bg-gradient-to-r from-[#131244] to-transparent">
                 <div class="max-w-6xl mx-auto m-4 p-2">
-                    <div class="flex phone_xl">
+                    <div class="flex phone_xl phone_xl">
                         <div class="w-3/12 tablet phone_xl-4">
                             <div class="w-full tablet-1">
                                 <img
@@ -27,11 +27,15 @@
                                         >Season Nr:
                                         {{ season.season_number }}</span
                                     >
-                                    <span
-                                        >Tv Show: {{ tvShow.name }} -
-                                        {{ tvShow.created_year }}</span
-                                    >
+                                    <span>Tv Show: {{ tvShow.name }} </span>
+                                    <span>{{ tvShow.created_year }}</span>
                                 </div>
+                            </div>
+                            <div
+                                class="pl-10 text-white mb-4 clear_pl-10 lg:text-justify"
+                            >
+                                <p class="font-bold text-xl">Overview</p>
+                                <p>{{ season.overView }}</p>
                             </div>
                         </div>
                     </div>

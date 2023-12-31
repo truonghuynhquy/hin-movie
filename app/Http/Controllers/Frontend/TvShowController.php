@@ -49,6 +49,16 @@ class TvShowController extends Controller
 
     public function seasonShow(TvShow $tvShow, Season $season)
     {
+        $tmdb_season = Http::asJson()->get(config('services.tmdb.endpoint') . 'tv/' . $tvShow['tmdb_id'] . '/season/' . (int)$season['season_number'] . '?api_key=' . config('services.tmdb.secret') . '&language=en-US');
+
+        if ($tmdb_season->successful()) {
+            if ($tmdb_season['overview'] == null || $tmdb_season['overview'] == '') {
+                $season->overView = "We don't have an overview translated in English. Help us expand our database by adding one.";
+            } else {
+                $season->overView = $tmdb_season['overview'];
+            }
+        }
+
         $latests = Movie::orderBy('created_at', 'desc')->take(9)->get();
 
         return Inertia::render('Frontend/TvShows/Seasons/Show', [
