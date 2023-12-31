@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Episode;
 use App\Models\Movie;
 use App\Models\Season;
 use App\Models\TvShow;
@@ -66,6 +67,17 @@ class TvShowController extends Controller
             'tvShow' => $tvShow,
             'episodes' => $season->episodes,
             'season' => $season
+        ]);
+    }
+
+    public function showEpisode(Episode $episode)
+    {
+
+        $latests = Episode::latest()->take(10)->get();
+        return Inertia::render('Frontend/Episodes/Show', [
+            'episode' => $episode,
+            'season' => $episode->season,
+            'latests' => $latests
         ]);
     }
 }
