@@ -5,7 +5,7 @@
             <section class="bg-gradient-to-r from-[#131244] to-transparent">
                 <div class="max-w-6xl mx-auto m-4 p-2">
                     <div class="flex phone_xl phone_xl">
-                        <div class="w-3/12 tablet phone_xl-4">
+                        <div class="w-3/12 flex items-center tablet phone_xl-4">
                             <div class="w-full tablet-1">
                                 <img
                                     class="w-full h-full rounded"
