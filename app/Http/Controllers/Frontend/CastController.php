@@ -20,7 +20,7 @@ class CastController extends Controller
     public function index()
     {
         return Inertia::render('Frontend/Casts/Index', [
-            'casts' => Cast::orderBy('updated_at', 'desc')->paginate(10)
+            'casts' => Cast::orderBy('updated_at', 'desc')->paginate(12)
         ]);
     }
 

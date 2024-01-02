@@ -13,7 +13,7 @@ class GenreController extends Controller
     {
         return Inertia::render('Frontend/Genres/Index', [
             'genre' => $genre,
-            'movies' => $genre->movies()->paginate(10),
+            'movies' => $genre->movies()->paginate(12),
         ]);
     }
 }

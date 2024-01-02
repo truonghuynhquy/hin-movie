@@ -15,7 +15,7 @@ class TvShowController extends Controller
     public function index()
     {
         return Inertia::render('Frontend/TvShows/Index', [
-            'tvShows' => TvShow::orderBy('created_at', 'desc')->paginate(10)
+            'tvShows' => TvShow::orderBy('created_at', 'desc')->paginate(12)
         ]);
     }
 

@@ -16,7 +16,7 @@
                         <div class="w-11/12 phone_xl-1">
                             <div class="m-4 p-6">
                                 <h1
-                                    class="flex text-blue-300 font-bold text-4xl"
+                                    class="flex text-blue-300 font-bold text-4xl add_justify-center"
                                 >
                                     {{ cast.name }}
                                 </h1>
@@ -62,7 +62,9 @@
                                     >
                                         Person Information
                                     </h1>
-                                    <div class="flex w-2/3 justify-between">
+                                    <div
+                                        class="flex w-2/3 justify-between phone_change-jb"
+                                    >
                                         <div
                                             class="pt-2 justify-center leading-8 text-white"
                                         >
@@ -92,6 +94,37 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section
+                class="max-w-6xl mx-auto bg-gray-200 dark:bg-gray-900 p-2 rounded"
+            >
+                <div class="flex justify-between phone_x2">
+                    <div class="phone_x2-1">
+                        <h1
+                            class="flex text-slate-600 dark:text-white font-bold text-xl"
+                        >
+                            {{ cast.name }} Movies
+                        </h1>
+                        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mt-4">
+                            <MovieCard v-for="movie in movies" :key="movie.id">
+                                <template #image>
+                                    <Link :href="`/movies/${movie.slug}`">
+                                        <img
+                                            class=""
+                                            :src="`https://www.themoviedb.org/t/p/w600_and_h900_face/${movie.poster_path}`"
+                                        />
+                                    </Link>
+                                </template>
+                                <Link :href="`/movies/${movie.slug}`">
+                                    <span
+                                        class="text-slate-600 dark:text-white"
+                                        >{{ movie.title }}</span
+                                    >
+                                </Link>
+                            </MovieCard>
                         </div>
                     </div>
                 </div>
@@ -126,4 +159,62 @@ function showLess() {
     showShortText.value = true;
 }
 </script>
-<style lang=""></style>
+<style>
+.italic {
+    font-style: italic;
+}
+.font-light {
+    font-weight: 300;
+}
+@media screen and (min-width: 767px) and (max-width: 900px) {
+    .min-h-screen {
+        min-height: 100%;
+    }
+}
+@media screen and (min-width: 300px) and (max-width: 767px) {
+    .add_justify-center {
+        justify-content: center;
+    }
+    .unset_flex {
+        display: unset;
+    }
+    .phone_justify-text {
+        justify-content: center;
+    }
+    .phone_change-jb {
+        width: 100%;
+        display: unset;
+    }
+    .clear_pl-10 {
+        padding-left: unset;
+    }
+    .phone_xl {
+        display: unset;
+        position: relative;
+    }
+    .phone_xl-1 {
+        width: unset;
+        text-align: center;
+    }
+    .phone_xl-2 {
+        padding-top: 1rem;
+        justify-content: center;
+    }
+    .phone_xl-3 {
+        padding-left: unset;
+    }
+    .phone_xl-4 {
+        width: 100%;
+    }
+    .phone_x2 {
+        display: unset;
+    }
+    .phone_x2 .phone_x2-1,
+    .phone_x2-2 {
+        width: unset;
+    }
+    .phone_x2-2 {
+        padding-top: 1rem;
+    }
+}
+</style>

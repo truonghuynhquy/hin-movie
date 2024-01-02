@@ -11,7 +11,7 @@ class MovieController extends Controller
 {
     public function index()
     {
-        $movies = Movie::orderBy('created_at', 'desc')->with('genres')->paginate(10);
+        $movies = Movie::orderBy('created_at', 'desc')->with('genres')->paginate(12);
 
         foreach ($movies as $movie) {
             $movie->percentMovie = $movie->rating * 10;

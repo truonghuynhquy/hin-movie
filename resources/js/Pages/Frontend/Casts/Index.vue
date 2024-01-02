@@ -6,7 +6,7 @@
                 class="bg-gray-200 dark:bg-gray-900 dark:text-white mt-4 p-2 rounded"
             >
                 <div
-                    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 rounded"
+                    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 rounded"
                 >
                     <MovieCard v-for="cast in casts.data" :key="cast.id">
                         <template #image>
