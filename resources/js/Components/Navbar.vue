@@ -16,7 +16,7 @@
                         src="/images/LogoMovie.png"
                         alt="Logo Movie"
                 /></a>
-                <!-- SearchModal -->
+                <SearchModal class="w-40 md:w-72" />
                 <button
                     class="md:hidden rounded-lg focus:outline-none focus:shadow-outline"
                     @click="openMobileMenu = !openMobileMenu"
@@ -79,6 +79,7 @@
 import { ref } from "vue";
 import { Link } from "@inertiajs/vue3";
 import Dropdown from "./Dropdown.vue";
+import SearchModal from "./SearchModal.vue";
 
 const openMobileMenu = ref(false);
 </script>
