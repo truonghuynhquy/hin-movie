@@ -94,6 +94,7 @@
                             <button
                                 class="flex items-center p-1.5 uppercase font-semibold tracking-wider text-gray-700 dark:text-slate-300 rounded-md border border-gray-200 focus:outline-none focus:border-gray-300 text-xs"
                                 type="button"
+                                @click="closeModal"
                             >
                                 x
                             </button>
