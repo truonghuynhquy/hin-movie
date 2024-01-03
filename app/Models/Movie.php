@@ -52,7 +52,10 @@ class Movie extends Model implements Searchable
     {
         return $this->morphMany(TrailerUrl::class, 'trailerable');
     }
-
+    public function downloads()
+    {
+        return $this->morphMany(Download::class, 'downloadable');
+    }
     public function casts()
     {
         return $this->belongsToMany(Cast::class, 'cast_movie');

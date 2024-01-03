@@ -277,6 +277,12 @@ function submitTrailer() {
     });
 }
 
+function submitDownload() {
+    formDownload.post(`/admin/movies/${props.movie.id}/add-download`, {
+        onSuccess: () => formDownload.reset(),
+    });
+}
+
 function addCast() {
     castForm.post(`/admin/movies/${props.movie.id}/add-casts`, {
         preserveState: true,

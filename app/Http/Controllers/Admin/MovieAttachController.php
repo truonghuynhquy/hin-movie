@@ -4,6 +4,7 @@ namespace  App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cast;
+use App\Models\Download;
 use App\Models\Movie;
 use App\Models\Tag;
 use App\Models\TrailerUrl;
@@ -38,10 +39,26 @@ class MovieAttachController extends Controller
         return Redirect::back()->with('flash.banner', 'Trailer Added.');
     }
 
+    public function addDownload(Movie $movie)
+    {
+        $movie->downloads()->create(Request::validate([
+            'name'    => 'required',
+            'web_url' => 'required'
+        ]));
+        return Redirect::back()->with('flash.banner', 'Download Added.');
+    }
+
     public function destroyTrailer(TrailerUrl $trailerUrl)
     {
         $trailerUrl->delete();
         return Redirect::back()->with('flash.banner', 'Trailer Deleted.');
+    }
+
+
+    public function destroyDownload(Download $download)
+    {
+        $download->delete();
+        return Redirect::back()->with('flash.banner', 'Download deleted.');
     }
 
     public function addCast(Movie $movie)
