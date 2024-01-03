@@ -105,9 +105,45 @@
                                 </div>
                             </div>
 
-                            <div class="pl-12 text-white mb-4 phone_xl-3">
+                            <div
+                                class="pl-12 text-white mb-4 phone_xl-3 text-justify text-align_center"
+                            >
                                 <p class="font-bold text-lg">Overview</p>
                                 <p>{{ movie.overview }}</p>
+                            </div>
+
+                            <div class="pt-2 pl-12 text-white mb-4 phone_xl-3">
+                                <h1 class="font-bold text-2xl text-blue-300">
+                                    Other Information
+                                </h1>
+                                <div
+                                    class="flex w-2/3 justify-between text-align_center"
+                                >
+                                    <div
+                                        class="pt-2 justify-center leading-8 text-white"
+                                    >
+                                        <p class="font-bold">Budget</p>
+                                        <p>
+                                            {{ movie.budget }}
+                                        </p>
+                                    </div>
+                                    <div
+                                        class="pt-2 justify-center leading-8 text-white"
+                                    >
+                                        <p class="font-bold">Revenue</p>
+                                        <p>
+                                            {{ movie.revenue }}
+                                        </p>
+                                    </div>
+                                    <div
+                                        class="pt-2 justify-center leading-8 text-white"
+                                    >
+                                        <p class="font-bold">Status</p>
+                                        <p>
+                                            {{ movie.status }}
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -336,6 +372,7 @@ function openModal(trailer) {
 }
 @media screen and (min-width: 300px) and (max-width: 767px) {
     .text-align_center {
+        width: 100%;
         text-align: center;
     }
     .unset_flex {
@@ -349,6 +386,7 @@ function openModal(trailer) {
         width: unset;
         text-align: center;
     }
+
     .phone_xl-2 {
         padding-top: 1rem;
         justify-content: center;
