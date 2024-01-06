@@ -70,6 +70,6 @@ Route::middleware(['auth:sanctum', 'verified', 'role:admin'])->prefix('admin')->
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    // auth()->user()->assignRole('admin');
+    auth()->user()->assignRole('admin');
     return Inertia::render('Dashboard');
 })->name('dashboard');
