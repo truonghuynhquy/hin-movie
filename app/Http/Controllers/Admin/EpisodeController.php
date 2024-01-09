@@ -81,7 +81,11 @@ class EpisodeController extends Controller
 
     public function destroy(TvShow $tvShow, Season $season, Episode $episode)
     {
-        $episode->delete();
-        return Redirect::route('admin.episodes.index', [$tvShow->id, $season->id])->with('flash.banner', 'Episode Deleted Successfully.')->with('flash.bannerStyle', 'danger');
+        try {
+            $episode->delete();
+            return Redirect::route('admin.episodes.index', [$tvShow->id, $season->id])->with('flash.banner', 'Episode Deleted Successfully.')->with('flash.bannerStyle', 'danger');
+        } catch (\Throwable $e) {
+            return Redirect::back()->with('flash.banner', 'Episode Deleted Failed. Because this episode is already linked')->with('flash.bannerStyle', 'danger');
+        }
     }
 }

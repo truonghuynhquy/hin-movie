@@ -101,8 +101,12 @@ class MovieController extends Controller
 
     public function destroy(Movie $movie)
     {
-        $movie->genres()->sync([]);
-        $movie->delete();
-        return Redirect::route('admin.movies.index')->with('flash.banner', 'Movie Deleted Successfully.')->with('flash.bannerStyle', 'danger');
+        try {
+            $movie->genres()->sync([]);
+            $movie->delete();
+            return Redirect::route('admin.movies.index')->with('flash.banner', 'Movie Deleted Successfully.')->with('flash.bannerStyle', 'danger');
+        } catch (\Throwable $e) {
+            return Redirect::back()->with('flash.banner', 'Movie Deleted Failed. Because this movie is already linked')->with('flash.bannerStyle', 'danger');
+        }
     }
 }

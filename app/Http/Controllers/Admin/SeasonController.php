@@ -79,7 +79,11 @@ class SeasonController extends Controller
 
     public function destroy(TvShow $tvShow, Season $season)
     {
-        $season->delete();
-        return Redirect::route('admin.seasons.index', $tvShow->id)->with('flash.banner', 'Season Deleted Successfully.')->with('flash.bannerStyle', 'danger');
+        try {
+            $season->delete();
+            return Redirect::route('admin.seasons.index', $tvShow->id)->with('flash.banner', 'Season Deleted Successfully.')->with('flash.bannerStyle', 'danger');
+        } catch (\Throwable $e) {
+            return Redirect::back()->with('flash.banner', 'Season Deleted Failed. Because this season is already linked')->with('flash.bannerStyle', 'danger');
+        }
     }
 }

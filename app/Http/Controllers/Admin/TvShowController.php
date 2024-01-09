@@ -71,7 +71,11 @@ class TvShowController extends Controller
 
     public function destroy(TvShow $tvShow)
     {
-        $tvShow->delete();
-        return Redirect::route('admin.tv-shows.index')->with('flash.banner', 'Tv Show Deleted Successfully.')->with('flash.bannerStyle', 'danger');
+        try {
+            $tvShow->delete();
+            return Redirect::route('admin.tv-shows.index')->with('flash.banner', 'Tv Show Deleted Successfully.')->with('flash.bannerStyle', 'danger');
+        } catch (\Throwable $e) {
+            return Redirect::back()->with('flash.banner', 'Tv Show Deleted Failed. Because this tv show is already linked')->with('flash.bannerStyle', 'danger');
+        }
     }
 }

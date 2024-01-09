@@ -60,7 +60,11 @@ class TagController extends Controller
 
     function destroy(Tag $tag)
     {
-        $tag->delete();
-        return Redirect::route('admin.tags.index')->with('flash.banner', 'Tag deleted successfully.')->with('flash.bannerStyle', 'danger');
+        try {
+            $tag->delete();
+            return Redirect::route('admin.tags.index')->with('flash.banner', 'Tag deleted successfully.')->with('flash.bannerStyle', 'danger');
+        } catch (\Throwable $e) {
+            return Redirect::back()->with('flash.banner', 'Tag Deleted Failed. Because this tag is already linked')->with('flash.bannerStyle', 'danger');
+        }
     }
 }
