@@ -11,10 +11,6 @@ defineProps({
     episodes: Array,
 });
 
-// const circleProgress = document.querySelector(
-//     ".edit.vue3-circular-progressbar.current-counter"
-// );
-
 const components = {
     CircleProgress,
 };
@@ -57,7 +53,7 @@ const components = {
                                 <div class="aspect-w-2 aspect-h-3">
                                     <img
                                         class="object-cover"
-                                        :src="`https://www.themoviedb.org/t/p/w220_and_h330_face/${movie.poster_path}`"
+                                        :src="`https://www.themoviedb.org/t/p/w600_and_h900_face/${movie.poster_path}`"
                                     />
                                 </div>
                                 <div
